@@ -12,9 +12,12 @@ import {
   CheckCircle,
   ExternalLink,
   X,
-  ArrowUp
+  ArrowUp,
+  RotateCw,
+  Sparkles
 } from 'lucide-react';
 
+import card1Image from './card1.png';
 import art1 from '../assets/quests/1.png';
 import art2 from '../assets/quests/2.png';
 import art3 from '../assets/quests/3.png';
@@ -187,9 +190,14 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
   const [searchQuery, setSearchQuery] = useState('');
   const [activeDossier, setActiveDossier] = useState<QuestItem | null>(null);
   const [registeredMap, setRegisteredMap] = useState<Record<number, boolean>>({});
+  const [flippedCards, setFlippedCards] = useState<Record<number, boolean>>({});
   const [viewportWidth, setViewportWidth] = useState(
     typeof window !== 'undefined' ? window.innerWidth : 1200
   );
+
+  const toggleFlip = (id: number) => {
+    setFlippedCards((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
 
   useEffect(() => {
     const handleResize = () => setViewportWidth(window.innerWidth);
@@ -481,139 +489,276 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
           ) : (
             filteredQuests.map((quest, index) => {
               const isRegistered = registeredMap[quest.id];
+              const isFlipped = !!flippedCards[quest.id];
               // Alternating vertical offset creating the wavy 3D floating ribbon from reference
               const isEven = index % 2 === 0;
               // Subtle alternating vertical offset for mobile, more pronounced on desktop
               const verticalFloat = isEven ? '-translate-y-2 sm:-translate-y-6' : 'translate-y-2 sm:translate-y-6';
+              // Card 1 specifically uses the epic Sung Jin-Woo card1.png from components
+              const backImage = quest.id === 1 ? card1Image : quest.image;
 
               return (
-                <motion.div
+                <div
                   key={quest.id}
-                  layout
-                  whileHover={{
-                    scale: 1.03,
-                    rotateY: 0,
-                    rotateX: 0,
-                    zIndex: 30,
-                    transition: { duration: 0.25, ease: 'easeOut' },
-                  }}
-                  className={`group relative w-[285px] xs:w-[320px] sm:w-[360px] lg:w-[390px] h-[435px] xs:h-[465px] sm:h-[505px] lg:h-[535px] rounded-2xl border border-white/20 hover:border-red-500/80 transition-all duration-300 overflow-hidden flex flex-col justify-between shadow-[0_25px_60px_rgba(0,0,0,0.85),0_0_25px_rgba(220,38,38,0.15)] cursor-pointer select-none shrink-0 ${verticalFloat}`}
+                  className={`group relative w-[285px] xs:w-[320px] sm:w-[360px] lg:w-[390px] h-[435px] xs:h-[465px] sm:h-[505px] lg:h-[535px] select-none shrink-0 ${verticalFloat}`}
                   style={{
-                    // High-fidelity frosted glass: blurs the giant typography behind it in real-time
-                    backdropFilter: 'blur(20px)',
-                    WebkitBackdropFilter: 'blur(20px)',
-                    background:
-                      'linear-gradient(165deg, rgba(255, 255, 255, 0.16) 0%, rgba(20, 5, 5, 0.84) 35%, rgba(0, 0, 0, 0.95) 100%)',
-                    // Subtle 3D tilted slab perspective angle from reference screenshots
-                    transform: 'perspective(1200px) rotateY(-7deg) rotateX(2.5deg) rotateZ(-0.5deg)',
-                    transformStyle: 'preserve-3d',
+                    perspective: 1400,
+                    transform: isFlipped
+                      ? 'perspective(1400px) rotateY(0deg) rotateX(0deg)'
+                      : 'perspective(1400px) rotateY(-6deg) rotateX(2deg) rotateZ(-0.5deg)',
+                    transition: 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)',
                   }}
                 >
-                  {/* Glowing Top Accent Line */}
-                  <div
-                    className="absolute top-0 inset-x-0 h-[3px] opacity-70 group-hover:opacity-100 transition-opacity"
-                    style={{ backgroundColor: quest.color }}
-                  />
+                  <motion.div
+                    animate={{
+                      rotateY: isFlipped ? 180 : 0,
+                      scale: isFlipped ? 1.02 : 1,
+                    }}
+                    transition={{
+                      duration: 0.75,
+                      ease: [0.23, 1, 0.32, 1],
+                    }}
+                    onClick={() => toggleFlip(quest.id)}
+                    className="relative w-full h-full cursor-pointer"
+                    style={{
+                      transformStyle: 'preserve-3d',
+                    }}
+                    whileHover={
+                      !isFlipped
+                        ? {
+                            scale: 1.03,
+                            transition: { duration: 0.25, ease: 'easeOut' },
+                          }
+                        : undefined
+                    }
+                  >
+                    {/* ================================================= */}
+                    {/* FRONT FACE (QUEST BRIEFING)                       */}
+                    {/* ================================================= */}
+                    <div
+                      className="absolute inset-0 w-full h-full rounded-2xl border border-white/20 hover:border-red-500/80 transition-colors duration-300 overflow-hidden flex flex-col justify-between shadow-[0_25px_60px_rgba(0,0,0,0.85),0_0_25px_rgba(220,38,38,0.15)]"
+                      style={{
+                        backfaceVisibility: 'hidden',
+                        WebkitBackfaceVisibility: 'hidden',
+                        transform: 'rotateY(0deg) translateZ(1px)',
+                        backdropFilter: 'blur(20px)',
+                        WebkitBackdropFilter: 'blur(20px)',
+                        background:
+                          'linear-gradient(165deg, rgba(255, 255, 255, 0.16) 0%, rgba(20, 5, 5, 0.84) 35%, rgba(0, 0, 0, 0.95) 100%)',
+                      }}
+                    >
+                      {/* Glowing Top Accent Line */}
+                      <div
+                        className="absolute top-0 inset-x-0 h-[3px] opacity-70 group-hover:opacity-100 transition-opacity"
+                        style={{ backgroundColor: quest.color }}
+                      />
 
-                  {/* Card Header Info */}
-                  <div className="p-3.5 sm:p-4 pb-1.5 flex items-center justify-between z-10">
-                    <div className="flex items-center gap-2">
-                      <span
-                        className="font-naruto px-2.5 py-0.5 rounded text-[10px] sm:text-xs font-bold uppercase tracking-wider border shadow-md"
+                      {/* Card Header Info */}
+                      <div className="p-3.5 sm:p-4 pb-1.5 flex items-center justify-between z-10">
+                        <div className="flex items-center gap-2">
+                          <span
+                            className="font-naruto px-2.5 py-0.5 rounded text-[10px] sm:text-xs font-bold uppercase tracking-wider border shadow-md"
+                            style={{
+                              backgroundColor: 'rgba(5, 8, 17, 0.85)',
+                              borderColor: quest.color,
+                              color: quest.color,
+                            }}
+                          >
+                            {quest.rank}
+                          </span>
+                          <span className="text-[10px] font-mono uppercase text-zinc-400">
+                            {quest.element}
+                          </span>
+                        </div>
+
+                        {/* Interactive Flip Badge & Kanji */}
+                        <div className="flex items-center gap-1.5">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleFlip(quest.id);
+                            }}
+                            title="Click to awaken card"
+                            className="font-naruto inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-950/70 border border-red-500/50 hover:bg-red-900 text-red-300 hover:text-white text-[10px] font-semibold tracking-wider uppercase transition-all shadow-sm cursor-pointer"
+                          >
+                            <RotateCw className="w-2.5 h-2.5 text-red-400" />
+                            <span>FLIP</span>
+                          </button>
+                          <div className="font-shojumaru text-sm sm:text-base font-bold text-white/80 bg-black/60 px-2 py-0.5 rounded border border-white/10 backdrop-blur-md">
+                            {quest.kanji}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Card Image Banner */}
+                      <div className="relative mx-3 sm:mx-4 h-34 xs:h-38 sm:h-44 rounded-xl overflow-hidden bg-black border border-white/10 shrink-0">
+                        <img
+                          src={quest.image}
+                          alt={quest.title}
+                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 filter saturate-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-black/30" />
+
+                        {/* Prize Ribbon in Image */}
+                        <div className="absolute bottom-2 left-2.5 flex items-center gap-1.5 text-xs font-bold text-[#ffd700] drop-shadow-md bg-black/70 px-2.5 py-1 rounded-md border border-[#ffd700]/30 backdrop-blur-md">
+                          <Trophy className="w-3.5 h-3.5 text-[#ffd700]" />
+                          <span className="font-naruto tracking-wider">{quest.prize}</span>
+                        </div>
+                      </div>
+
+                      {/* Card Body Narrative */}
+                      <div className="p-3.5 sm:p-4 flex-1 flex flex-col justify-between z-10">
+                        <div>
+                          {/* Quest Title */}
+                          <h3 className="font-naruto text-base sm:text-lg text-white font-bold tracking-wider group-hover:text-[#00d4ff] transition-colors leading-snug">
+                            {quest.title}
+                          </h3>
+
+                          {/* Snippet / Narrative Quote */}
+                          <p className="text-xs text-zinc-300 mt-1.5 line-clamp-2 leading-relaxed font-normal">
+                            "{quest.snippet}"
+                          </p>
+                        </div>
+
+                        {/* Meta Row: Date & Team */}
+                        <div className="pt-2.5 border-t border-white/10 mt-2">
+                          <div className="flex items-center justify-between text-[11px] text-zinc-400 font-mono mb-2.5">
+                            <span className="flex items-center gap-1 truncate">
+                              <Calendar className="w-3.5 h-3.5 text-[#00d4ff] shrink-0" />
+                              <span className="truncate">{quest.date}</span>
+                            </span>
+                            <span className="flex items-center gap-1 text-zinc-300 shrink-0">
+                              <Users className="w-3.5 h-3.5 text-zinc-400" />
+                              <span>{quest.team}</span>
+                            </span>
+                          </div>
+
+                          {/* Action Buttons: Dossier & Enlist */}
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setActiveDossier(quest);
+                              }}
+                              className="font-naruto flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-zinc-800/90 hover:bg-zinc-700 text-white text-xs uppercase tracking-wider transition-colors cursor-pointer border border-zinc-600 shadow-sm"
+                            >
+                              <span>Dossier</span>
+                              <ChevronRight className="w-3.5 h-3.5 text-[#00d4ff]" />
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleRegister(quest.id);
+                              }}
+                              className="font-naruto inline-flex items-center justify-center gap-1 py-2 px-3.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer shadow-md"
+                              style={{
+                                backgroundColor: isRegistered ? '#10b981' : quest.color,
+                                color: isRegistered ? '#ffffff' : '#050811',
+                              }}
+                            >
+                              {isRegistered ? (
+                                <>
+                                  <CheckCircle className="w-3.5 h-3.5" />
+                                  <span>Joined</span>
+                                </>
+                              ) : (
+                                <>
+                                  <span>Enlist</span>
+                                </>
+                              )}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* ================================================= */}
+                    {/* BACK FACE (AWAKENED FULL ART CARD1.PNG)          */}
+                    {/* ================================================= */}
+                    <div
+                      className="absolute inset-0 w-full h-full rounded-2xl border-2 border-purple-500/80 overflow-hidden flex flex-col justify-between shadow-[0_0_45px_rgba(168,85,247,0.55),0_25px_60px_rgba(0,0,0,0.95)]"
+                      style={{
+                        backfaceVisibility: 'hidden',
+                        WebkitBackfaceVisibility: 'hidden',
+                        transform: 'rotateY(180deg) translateZ(1px)',
+                        background: '#0a050d',
+                      }}
+                    >
+                      {/* Full-Bleed Collectible Anime Art */}
+                      <img
+                        src={backImage}
+                        alt={`${quest.title} Awakened Card`}
+                        className="absolute inset-0 w-full h-full object-cover object-center filter saturate-110 contrast-105"
+                      />
+
+                      {/* Holographic Prismatic Foil Shimmer */}
+                      <div
+                        className="pointer-events-none absolute inset-0 opacity-60 mix-blend-color-dodge"
                         style={{
-                          backgroundColor: 'rgba(5, 8, 17, 0.85)',
-                          borderColor: quest.color,
-                          color: quest.color,
+                          background:
+                            'linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(168, 85, 247, 0.3) 30%, transparent 60%, rgba(0, 212, 255, 0.4) 100%)',
                         }}
-                      >
-                        {quest.rank}
-                      </span>
-                      <span className="text-[10px] font-mono uppercase text-zinc-400">
-                        {quest.element}
-                      </span>
-                    </div>
+                      />
 
-                    <div className="font-shojumaru text-sm sm:text-base font-bold text-white/80 bg-black/60 px-2 py-0.5 rounded border border-white/10 backdrop-blur-md">
-                      {quest.kanji}
-                    </div>
-                  </div>
+                      {/* Vignette gradients for text readability */}
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/95 via-black/25 to-black/75" />
 
-                  {/* Card Image Banner */}
-                  <div className="relative mx-3 sm:mx-4 h-34 xs:h-38 sm:h-44 rounded-xl overflow-hidden bg-black border border-white/10 shrink-0">
-                    <img
-                      src={quest.image}
-                      alt={quest.title}
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 filter saturate-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-black/30" />
-
-                    {/* Prize Ribbon in Image */}
-                    <div className="absolute bottom-2 left-2.5 flex items-center gap-1.5 text-xs font-bold text-[#ffd700] drop-shadow-md bg-black/70 px-2.5 py-1 rounded-md border border-[#ffd700]/30 backdrop-blur-md">
-                      <Trophy className="w-3.5 h-3.5 text-[#ffd700]" />
-                      <span className="font-naruto tracking-wider">{quest.prize}</span>
-                    </div>
-                  </div>
-
-                  {/* Card Body Narrative */}
-                  <div className="p-3.5 sm:p-4 flex-1 flex flex-col justify-between z-10">
-                    <div>
-                      {/* Quest Title */}
-                      <h3 className="font-naruto text-base sm:text-lg text-white font-bold tracking-wider group-hover:text-[#00d4ff] transition-colors leading-snug">
-                        {quest.title}
-                      </h3>
-
-                      {/* Snippet / Narrative Quote */}
-                      <p className="text-xs text-zinc-300 mt-1.5 line-clamp-2 leading-relaxed font-normal">
-                        "{quest.snippet}"
-                      </p>
-                    </div>
-
-                    {/* Meta Row: Date & Team */}
-                    <div className="pt-2.5 border-t border-white/10 mt-2">
-                      <div className="flex items-center justify-between text-[11px] text-zinc-400 font-mono mb-2.5">
-                        <span className="flex items-center gap-1 truncate">
-                          <Calendar className="w-3.5 h-3.5 text-[#00d4ff] shrink-0" />
-                          <span className="truncate">{quest.date}</span>
+                      {/* Top Header Floating Badge */}
+                      <div className="relative z-20 p-3 sm:p-4 flex items-center justify-between">
+                        <span className="font-naruto text-[10px] sm:text-xs px-2.5 py-1 rounded-full bg-black/80 border border-purple-500/70 text-purple-300 shadow-[0_0_15px_rgba(168,85,247,0.6)] flex items-center gap-1.5 backdrop-blur-md">
+                          <Sparkles className="w-3 h-3 text-purple-400 animate-pulse" />
+                          {quest.id === 1 ? 'SHADOW MONARCH AWAKENED' : `${quest.rank} AWAKENED`}
                         </span>
-                        <span className="flex items-center gap-1 text-zinc-300 shrink-0">
-                          <Users className="w-3.5 h-3.5 text-zinc-400" />
-                          <span>{quest.team}</span>
+
+                        <span className="font-shojumaru text-sm text-purple-200 bg-black/80 px-2 py-0.5 rounded border border-purple-500/40 backdrop-blur-md">
+                          {quest.kanji}
                         </span>
                       </div>
 
-                      {/* Action Buttons: Dossier & Enlist */}
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => setActiveDossier(quest)}
-                          className="font-naruto flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-zinc-800/90 hover:bg-zinc-700 text-white text-xs uppercase tracking-wider transition-colors cursor-pointer border border-zinc-600 shadow-sm"
-                        >
-                          <span>Dossier</span>
-                          <ChevronRight className="w-3.5 h-3.5 text-[#00d4ff]" />
-                        </button>
+                      {/* Bottom Footer Controls */}
+                      <div className="relative z-20 p-3 sm:p-4 space-y-2">
+                        {/* Quote from Solo Leveling */}
+                        <div className="px-2.5 py-1.5 rounded-lg bg-black/75 border border-purple-500/30 backdrop-blur-md">
+                          <p className="font-mono text-[10px] sm:text-[11px] text-purple-200/90 leading-tight italic">
+                            {quest.id === 1
+                              ? '"I don\'t just become stronger. I leave everything behind."'
+                              : `"${quest.snippet}"`}
+                          </p>
+                        </div>
 
-                        <button
-                          onClick={() => handleRegister(quest.id)}
-                          className="font-naruto inline-flex items-center justify-center gap-1 py-2 px-3.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer shadow-md"
-                          style={{
-                            backgroundColor: isRegistered ? '#10b981' : quest.color,
-                            color: isRegistered ? '#ffffff' : '#050811',
-                          }}
-                        >
-                          {isRegistered ? (
-                            <>
-                              <CheckCircle className="w-3.5 h-3.5" />
-                              <span>Joined</span>
-                            </>
-                          ) : (
-                            <>
-                              <span>Enlist</span>
-                            </>
-                          )}
-                        </button>
+                        {/* Action Buttons: Flip Back & Enlist */}
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleFlip(quest.id);
+                            }}
+                            className="font-naruto flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-black/85 hover:bg-purple-950 text-white text-xs uppercase tracking-wider transition-all border border-purple-500/60 shadow-[0_0_15px_rgba(168,85,247,0.4)] backdrop-blur-md cursor-pointer hover:border-purple-400"
+                          >
+                            <RotateCw className="w-3.5 h-3.5 text-purple-400" />
+                            <span>FLIP TO QUEST</span>
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleRegister(quest.id);
+                            }}
+                            className="font-naruto px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs uppercase tracking-wider font-bold shadow-[0_0_20px_rgba(147,51,234,0.6)] transition-all cursor-pointer"
+                          >
+                            {isRegistered ? 'JOINED' : 'ENLIST'}
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </motion.div>
+                  </motion.div>
+                </div>
               );
             })
           )}
