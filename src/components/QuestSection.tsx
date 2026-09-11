@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 
 import card1Image from './card1.png';
+import back4Image from './back4.png';
 import art1 from '../assets/quests/1.png';
 import art2 from '../assets/quests/2.png';
 import art3 from '../assets/quests/3.png';
@@ -254,6 +255,10 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
     { clamp: true }
   );
 
+  // Subtle dynamic parallax & scale for Solo Leveling Shadow Monarch Dungeon Gate background
+  const bgScale = useTransform(scrollYProgress, [0.66, 0.98], [1.02, 1.08]);
+  const bgX = useTransform(scrollYProgress, [0.66, 0.98], ['0%', '-3%']);
+
   const filteredQuests = QUESTS.filter((quest) => {
     const matchesCategory =
       selectedCategory === 'All' || quest.category.toLowerCase() === selectedCategory.toLowerCase();
@@ -319,7 +324,28 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
       className="absolute inset-0 w-full min-w-full h-full min-h-full z-20 flex flex-col text-white overflow-hidden select-none border-b-2 border-purple-900/50 shadow-[0_25px_60px_rgba(0,0,0,0.98)]"
     >
       {/* Background Ambient Glow & Subtle Texture (Solo Leveling Shadow Monarch Theme) */}
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Solo Leveling Shadow Monarch Dungeon Gate & Pillars (back4.png) */}
+        <motion.div
+          style={{ scale: bgScale, x: bgX }}
+          className="absolute inset-0 flex items-center justify-center pointer-events-none will-change-transform"
+        >
+          <img
+            src={back4Image}
+            alt="Solo Leveling Shadow Monarch Gate"
+            className="w-full h-full object-cover object-center opacity-65 filter contrast-125 saturate-125 select-none pointer-events-none"
+          />
+          {/* Vertical and Radial Depth Gradients for perfect text readability and abyssal mood */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/80" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/30 to-black/75" />
+          <div
+            className="absolute inset-0"
+            style={{
+              background: 'radial-gradient(circle at 40% 50%, transparent 20%, rgba(2,0,5,0.7) 70%, #020005 100%)',
+            }}
+          />
+        </motion.div>
+
         {/* Shadow Monarch Abyssal Violet Nebula */}
         <div
           className="absolute -top-24 left-10 w-[70vw] h-[500px]"
