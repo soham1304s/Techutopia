@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, MotionValue, useTransform, AnimatePresence } from 'framer-motion';
 import {
   Trophy,
@@ -187,6 +187,16 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
   const [searchQuery, setSearchQuery] = useState('');
   const [activeDossier, setActiveDossier] = useState<QuestItem | null>(null);
   const [registeredMap, setRegisteredMap] = useState<Record<number, boolean>>({});
+  const [viewportWidth, setViewportWidth] = useState(
+    typeof window !== 'undefined' ? window.innerWidth : 1200
+  );
+
+  useEffect(() => {
+    const handleResize = () => setViewportWidth(window.innerWidth);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Motion Choreography:
   // 0.00 -> 0.56: offscreen above (y: '-100%')
@@ -214,14 +224,19 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
   );
 
   // Horizontal Card Stream Motion (Noomo-Style 3D Stream):
-  // 0.66 -> 1.00: Cards glide horizontally from right to left across the screen
-  // Passing over the pinned left typography "GREAT RAIDS CAN'T HAPPEN WITHOUT HUNTERS."
-  const trackX = useTransform(
-    scrollYProgress,
-    [0.66, 0.98],
-    ['36vw', '-155vw'],
-    { clamp: true }
-  );
+  // Cards glide horizontally from right to left across the screen
+  // Passing smoothly over the pinned unboxed typography "GREAT RAIDS CAN'T HAPPEN WITHOUT HUNTERS."
+  const isMobile = viewportWidth < 768;
+  const isTablet = viewportWidth >= 768 && viewportWidth < 1024;
+  const startX = isMobile ? 6 : isTablet ? 20 : 38;
+  const endX = isMobile ? -250 : isTablet ? -200 : -160;
+
+  const trackX = useTransform(scrollYProgress, (v) => {
+    if (v <= 0.66) return `${startX}vw`;
+    if (v >= 0.98) return `${endX}vw`;
+    const progress = (v - 0.66) / (0.98 - 0.66);
+    return `${startX + progress * (endX - startX)}vw`;
+  });
 
   // Progress bar indicating scroll advancement across cards
   const scrollIndicatorWidth = useTransform(
@@ -327,125 +342,124 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
         />
       </div>
 
-      {/* Floating System HUD Actions (Top-Right) */}
-      <div className="absolute top-3 sm:top-5 right-3 sm:right-6 z-30 flex items-center gap-2 sm:gap-3">
-        {/* Raid Stream Progress Pill */}
-        <div className="hidden md:flex items-center gap-2 bg-black/80 px-3 py-1.5 rounded-full border border-red-500/30 backdrop-blur-md shadow-md">
-          <span className="text-[10px] font-mono text-zinc-300 uppercase tracking-wider">
-            Raid Stream
-          </span>
-          <div className="w-20 h-1.5 bg-zinc-900 rounded-full overflow-hidden border border-white/10">
-            <motion.div
-              style={{ width: scrollIndicatorWidth }}
-              className="h-full bg-gradient-to-r from-[#ffffff] via-[#dc2626] to-[#000000]"
-            />
+      {/* Sleek Minimal Top Navigation HUD (Unboxed) */}
+      <div className="relative z-30 w-full px-4 sm:px-8 py-3 flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-white/10 bg-black/40 backdrop-blur-md">
+        {/* Left: Quest System Tag & Category Pills */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 lg:gap-6">
+          <div className="flex items-center gap-2.5">
+            <span className="font-naruto inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-red-500/60 bg-red-950/70 text-red-300 text-[10px] sm:text-xs font-bold tracking-widest uppercase shadow-[0_0_12px_rgba(239,68,68,0.3)]">
+              <Flame className="w-3.5 h-3.5 text-red-500 animate-pulse" />
+              SYSTEM QUESTS
+            </span>
+            <span className="text-[10px] sm:text-xs font-mono font-bold text-[#ffd700] bg-black/70 px-2.5 py-1 rounded-full border border-[#ffd700]/30 shadow-sm">
+              ₹3.4L+ POOL
+            </span>
+          </div>
+
+          {/* Hunter Class Categories (Horizontal Scrollable Pills) */}
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+            {CATEGORIES.map((cat) => {
+              const isActive = selectedCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className="font-naruto relative px-3 py-1 rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider transition-all whitespace-nowrap cursor-pointer border shrink-0"
+                  style={{
+                    backgroundColor: isActive ? '#dc2626' : 'rgba(0, 0, 0, 0.5)',
+                    color: isActive ? '#ffffff' : '#d4d4d8',
+                    borderColor: isActive ? '#f87171' : 'rgba(255, 255, 255, 0.15)',
+                    boxShadow: isActive ? '0 0 14px rgba(220, 38, 38, 0.6)' : 'none',
+                  }}
+                >
+                  {cat}
+                  {cat === 'All' && ` [${QUESTS.length}]`}
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        {/* Return to About Button */}
-        <button
-          onClick={scrollToAbout}
-          title="Return to About Section"
-          className="font-naruto inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-red-500/40 bg-black/80 text-zinc-200 hover:text-white hover:border-red-500 hover:shadow-[0_0_15px_rgba(220,38,38,0.4)] transition-all text-xs shrink-0 cursor-pointer backdrop-blur-md"
-        >
-          <ArrowUp className="w-3.5 h-3.5 text-red-500" />
-          <span>About</span>
-        </button>
+        {/* Right: Search, Raid Stream & Return to About */}
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          {/* Minimal Search Pill */}
+          <div className="relative w-36 sm:w-48 lg:w-56">
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-400" />
+            <input
+              type="text"
+              placeholder="Search raids, tags..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-8 pr-7 py-1 rounded-full bg-zinc-950/80 border border-zinc-700/80 text-xs text-white placeholder-zinc-400 focus:outline-none focus:border-red-500 transition-colors shadow-inner"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white cursor-pointer"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
+
+          {/* Raid Stream Progress Pill */}
+          <div className="hidden lg:flex items-center gap-2 bg-black/80 px-3 py-1 rounded-full border border-red-500/30 backdrop-blur-md shadow-md">
+            <span className="text-[10px] font-mono text-zinc-300 uppercase tracking-wider">
+              Raid Stream
+            </span>
+            <div className="w-16 h-1.5 bg-zinc-900 rounded-full overflow-hidden border border-white/10">
+              <motion.div
+                style={{ width: scrollIndicatorWidth }}
+                className="h-full bg-gradient-to-r from-[#ffffff] via-[#dc2626] to-[#000000]"
+              />
+            </div>
+          </div>
+
+          {/* Return to About Button */}
+          <button
+            onClick={scrollToAbout}
+            title="Return to About Section"
+            className="font-naruto inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full border border-red-500/40 bg-black/80 text-zinc-200 hover:text-white hover:border-red-500 hover:shadow-[0_0_15px_rgba(220,38,38,0.4)] transition-all text-xs shrink-0 cursor-pointer backdrop-blur-md"
+          >
+            <ArrowUp className="w-3.5 h-3.5 text-red-500" />
+            <span>About</span>
+          </button>
+        </div>
       </div>
 
       {/* Main Interactive Stage */}
-      <div className="relative z-10 flex-1 w-full overflow-hidden flex flex-col lg:flex-row items-center justify-between">
+      <div className="relative z-10 flex-1 w-full overflow-hidden flex items-center">
         {/* ======================================================== */}
-        {/* SOLO LEVELING SYSTEM HUD & QUEST BRIEFING                */}
-        {/* Perfectly positioned and aligned on the left / top       */}
+        {/* NOOMO AGENCY PINNED CANVAS TYPOGRAPHY (UNBOXED)          */}
+        {/* Pinned directly on the background canvas, cards float    */}
+        {/* and blur over it dynamically in real-time                */}
         {/* ======================================================== */}
-        <div className="relative lg:absolute left-0 lg:left-8 xl:left-14 top-3 lg:top-1/2 lg:-translate-y-1/2 z-20 w-full lg:max-w-xl xl:max-w-2xl px-3.5 sm:px-6 lg:px-0 select-none">
-          {/* Solo Leveling System Notification Window Box */}
-          <div className="relative rounded-2xl bg-black/85 border border-red-500/50 p-4 sm:p-5 lg:p-6 backdrop-blur-2xl shadow-[0_0_40px_rgba(220,38,38,0.3),inset_0_0_30px_rgba(220,38,38,0.08)]">
-            {/* Japanese Kanji Watermark */}
-            <div className="font-shojumaru absolute top-2 right-4 text-5xl sm:text-7xl text-red-500/10 select-none pointer-events-none">
-              試練
-            </div>
-
-            {/* System Notification Header */}
-            <div className="flex items-center justify-between gap-2 mb-2 flex-wrap">
-              <span className="font-naruto inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border border-red-500/60 bg-red-950/80 text-red-300 text-[10px] sm:text-xs font-bold tracking-widest uppercase shadow-[0_0_10px_rgba(239,68,68,0.4)]">
-                <Flame className="w-3 h-3 text-red-500 animate-pulse" />
-                [ SYSTEM NOTIFICATION // システム ]
-              </span>
-              <span className="text-[10px] sm:text-xs font-mono font-bold text-[#ffd700] bg-black/60 px-2.5 py-0.5 rounded-md border border-[#ffd700]/30 shadow-sm">
-                ₹3,40,000+ BOUNTY POOL
-              </span>
-            </div>
-
-            {/* Solo Leveling Title */}
-            <h1 className="font-naruto text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-[34px] text-white tracking-wider uppercase leading-tight drop-shadow-md">
-              DUNGEON QUESTS &{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff3333] via-[#ffffff] to-[#ff2222]">
-                FESTIVAL MISSIONS
-              </span>
-            </h1>
-
-            {/* Catchphrase / Statement */}
-            <div className="mt-1 text-[11px] sm:text-xs font-mono font-bold tracking-wide text-red-400 uppercase flex items-center gap-1.5">
-              <span className="text-red-500">▶</span>
-              <span className="truncate">GREAT RAIDS CAN'T HAPPEN WITHOUT HUNTERS.</span>
-            </div>
-
-            {/* Mission Briefing Narrative */}
-            <p className="mt-2 text-xs sm:text-sm text-zinc-300 leading-relaxed font-normal max-w-lg hidden sm:block">
-              The Monarch has unsealed 6 S-Rank Dungeon Gates across TECHFEST 2026. Select your specialization, assemble your guild squad, and conquer the bosses before time portal collapse.
-            </p>
-
-            {/* Hunter Class Selection (Category Pills) */}
-            <div className="mt-3 pt-2.5 border-t border-white/10">
-              <div className="flex items-center justify-between text-[10px] sm:text-xs font-mono uppercase tracking-wider text-zinc-400 mb-1.5">
-                <span>HUNTER CLASS SELECT:</span>
-                <span className="text-red-400 font-bold">{selectedCategory} RAID</span>
-              </div>
-              <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar sm:flex-wrap pb-1">
-                {CATEGORIES.map((cat) => {
-                  const isActive = selectedCategory === cat;
-                  return (
-                    <button
-                      key={cat}
-                      onClick={() => setSelectedCategory(cat)}
-                      className="font-naruto relative px-2.5 sm:px-3 py-1 rounded-md text-[10px] sm:text-xs font-semibold uppercase tracking-wider transition-all whitespace-nowrap cursor-pointer border shrink-0"
-                      style={{
-                        backgroundColor: isActive ? '#dc2626' : 'rgba(0, 0, 0, 0.7)',
-                        color: isActive ? '#ffffff' : '#d4d4d8',
-                        borderColor: isActive ? '#f87171' : 'rgba(255, 255, 255, 0.2)',
-                        boxShadow: isActive ? '0 0 12px rgba(220, 38, 38, 0.6)' : 'none',
-                      }}
-                    >
-                      {cat}
-                      {cat === 'All' && ` [${QUESTS.length}]`}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Search Input Box */}
-            <div className="relative mt-2.5 w-full sm:w-72">
-              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-400" />
-              <input
-                type="text"
-                placeholder="Search raid boss, rank, tags..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-8 pr-7 py-1.5 rounded-lg bg-zinc-950/90 border border-zinc-700/80 text-xs text-white placeholder-zinc-400 focus:outline-none focus:border-red-500 transition-colors shadow-inner"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white cursor-pointer"
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              )}
-            </div>
+        <div className="pointer-events-none absolute left-6 sm:left-12 lg:left-20 xl:left-24 top-1/2 -translate-y-1/2 z-0 max-w-md sm:max-w-lg lg:max-w-xl xl:max-w-2xl select-none">
+          {/* Japanese Kanji Faint Watermark Accent */}
+          <div className="font-shojumaru text-6xl sm:text-8xl lg:text-9xl text-red-500/10 leading-none select-none pointer-events-none mb-1">
+            試練
           </div>
+
+          {/* Big Pinned Statement */}
+          <h2 className="font-naruto text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black uppercase tracking-tight text-white leading-[0.92] drop-shadow-[0_15px_35px_rgba(0,0,0,0.9)]">
+            GREAT RAIDS<br />
+            CAN'T HAPPEN<br />
+            WITHOUT<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff2222] via-[#ffffff] to-[#ff4444]">
+              HUNTERS.
+            </span>
+          </h2>
+
+          {/* Statement Tagline */}
+          <div className="mt-3 sm:mt-5 flex items-center gap-2 text-[11px] sm:text-xs font-mono font-bold text-red-400 uppercase tracking-wider">
+            <span className="text-red-500">▶</span>
+            <span>6 S-RANK DUNGEONS // TECHFEST 2026</span>
+          </div>
+
+          {/* Narrative Line */}
+          <p className="mt-2 text-xs sm:text-sm text-zinc-300/80 font-sans max-w-md hidden sm:block leading-relaxed">
+            The Monarch has unsealed 6 S-Rank Dungeon Gates across TECHFEST 2026. Select your specialization, assemble your squad, and conquer the bosses before time portal collapse.
+          </p>
         </div>
 
         {/* ======================================================== */}
