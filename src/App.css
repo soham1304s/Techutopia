@@ -1,0 +1,104 @@
+/* TOONHUB App Styles */
+
+/* Suppress all scrollbars across browsers */
+html, body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+html::-webkit-scrollbar, body::-webkit-scrollbar, *::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Production-grade Ambient Glow & Dim Breathing Animations */
+@keyframes bgGlowBreathe {
+  0% {
+    filter: brightness(0.92) contrast(1.02) saturate(0.98);
+  }
+  50% {
+    filter: brightness(1.18) contrast(1.08) saturate(1.2);
+  }
+  100% {
+    filter: brightness(0.92) contrast(1.02) saturate(0.98);
+  }
+}
+
+@keyframes glowPulsePrimary {
+  0% {
+    transform: translate(-50%, -50%) scale(0.88);
+    opacity: 0.38;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.15);
+    opacity: 0.88;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.88);
+    opacity: 0.38;
+  }
+}
+
+@keyframes glowPulseSecondary {
+  0% {
+    transform: scale(0.9) translate3d(0, 0, 0);
+    opacity: 0.25;
+  }
+  50% {
+    transform: scale(1.2) translate3d(15px, -20px, 0);
+    opacity: 0.75;
+  }
+  100% {
+    transform: scale(0.9) translate3d(0, 0, 0);
+    opacity: 0.25;
+  }
+}
+
+@keyframes glowPulseAccent {
+  0% {
+    transform: translate(-50%, 0) scale(0.92);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translate(-50%, 0) scale(1.12);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(-50%, 0) scale(0.92);
+    opacity: 0.2;
+  }
+}
+
+.animate-bg-breathe {
+  animation: bgGlowBreathe 6.5s ease-in-out infinite;
+  will-change: filter;
+}
+
+.animate-glow-primary {
+  animation: glowPulsePrimary 5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-glow-secondary {
+  animation: glowPulseSecondary 7.5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-glow-accent {
+  animation: glowPulseAccent 6s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-bg-breathe,
+  .animate-glow-primary,
+  .animate-glow-secondary,
+  .animate-glow-accent {
+    animation: none !important;
+    opacity: 0.55 !important;
+  }
+}

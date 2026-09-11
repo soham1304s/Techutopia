@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Ninja Naruto';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/njnaruto.woff') format('woff'),
+       local('Ninja Naruto');
+  font-display: swap;
+}
+
+@theme {
+  --font-naruto: 'Ninja Naruto', 'Shojumaru', 'Dela Gothic One', sans-serif;
+  --font-shojumaru: 'Shojumaru', cursive;
+  --font-dela: 'Dela Gothic One', sans-serif;
+  --font-anton: 'Anton', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+}
+
+.font-naruto {
+  font-family: 'Ninja Naruto', 'Shojumaru', 'Dela Gothic One', sans-serif;
+  letter-spacing: 0.04em;
+}
+
+.font-shojumaru {
+  font-family: 'Shojumaru', 'Ninja Naruto', cursive;
+}
+
+.font-dela {
+  font-family: 'Dela Gothic One', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
