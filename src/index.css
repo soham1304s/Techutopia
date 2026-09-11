@@ -13,6 +13,7 @@
   --font-solo: 'Cinzel', 'Trajan Pro', serif;
   --font-system: 'Rajdhani', 'Orbitron', sans-serif;
   --font-orbitron: 'Orbitron', monospace;
+  --font-slash: 'Road Rage', 'Sedgwick Ave Display', 'Permanent Marker', cursive;
   --font-naruto: 'Ninja Naruto', 'Shojumaru', 'Dela Gothic One', sans-serif;
   --font-shojumaru: 'Shojumaru', cursive;
   --font-dela: 'Dela Gothic One', sans-serif;
@@ -33,6 +34,11 @@
 .font-orbitron {
   font-family: 'Orbitron', monospace;
   letter-spacing: 0.08em;
+}
+
+.font-slash {
+  font-family: 'Road Rage', 'Sedgwick Ave Display', 'Permanent Marker', cursive;
+  letter-spacing: 0.04em;
 }
 
 .font-naruto {

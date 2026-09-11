@@ -6,7 +6,6 @@ import {
   MapPin,
   Calendar,
   Search,
-  ChevronRight,
   ShieldAlert,
   Flame,
   CheckCircle,
@@ -14,7 +13,9 @@ import {
   X,
   ArrowUp,
   RotateCw,
-  Sparkles
+  Sparkles,
+  Crown,
+  ArrowRight
 } from 'lucide-react';
 
 import card1Image from './card1.png';
@@ -29,6 +30,10 @@ import art6 from '../assets/quests/6.png';
 export interface QuestItem {
   id: number;
   title: string;
+  eyebrow?: string;
+  titlePart1?: string;
+  titlePart2?: string;
+  subtitle?: string;
   kanji: string;
   rank: string;
   threat: string;
@@ -49,6 +54,10 @@ const QUESTS: QuestItem[] = [
   {
     id: 1,
     title: 'Shadow Monarch Code Clash',
+    eyebrow: 'SOLO LEVELING',
+    titlePart1: 'SHADOW MONARCH',
+    titlePart2: 'CODE CLASH',
+    subtitle: 'ARISE.',
     kanji: '影の王',
     rank: 'S-RANK RAID',
     threat: 'S-TIER',
@@ -71,6 +80,10 @@ const QUESTS: QuestItem[] = [
   {
     id: 2,
     title: 'Hashira Hackathon (24hr)',
+    eyebrow: 'DEMON SLAYER',
+    titlePart1: 'HASHIRA ARENA',
+    titlePart2: 'HACKATHON (24HR)',
+    subtitle: 'SET YOUR HEART ABLAZE.',
     kanji: '炎柱',
     rank: 'SUPREME SUMMON',
     threat: 'MYTHIC',
@@ -93,6 +106,10 @@ const QUESTS: QuestItem[] = [
   {
     id: 3,
     title: 'Mecha Titan Arena',
+    eyebrow: 'STEEL TITANS',
+    titlePart1: 'MECHA TITAN',
+    titlePart2: 'COLISEUM ARENA',
+    subtitle: 'HEAVYWEIGHT STEEL.',
     kanji: '鋼鉄神',
     rank: 'A-RANK COLISEUM',
     threat: 'A-TIER',
@@ -115,6 +132,10 @@ const QUESTS: QuestItem[] = [
   {
     id: 4,
     title: 'Neural Network Dojo',
+    eyebrow: 'CYBER SYNAPSE',
+    titlePart1: 'NEURAL NETWORK',
+    titlePart2: 'DOJO SPRINT',
+    subtitle: 'SUPREME INTELLECT.',
     kanji: '超知能',
     rank: 'A-RANK INTELLECT',
     threat: 'A-TIER',
@@ -137,6 +158,10 @@ const QUESTS: QuestItem[] = [
   {
     id: 5,
     title: 'Breathing Form: UI/UX Sprint',
+    eyebrow: 'WATER BREATHING',
+    titlePart1: 'BREATHING FORM',
+    titlePart2: 'UI/UX SPRINT',
+    subtitle: 'FLUID ARTISTRY.',
     kanji: '水の呼吸',
     rank: 'B-RANK CRAFT',
     threat: 'B-TIER',
@@ -159,6 +184,10 @@ const QUESTS: QuestItem[] = [
   {
     id: 6,
     title: 'Cyber Jutsu CTF Showdown',
+    eyebrow: 'SHADOW PROTOCOL',
+    titlePart1: 'CYBER JUTSU',
+    titlePart2: 'CTF SHOWDOWN',
+    subtitle: 'SECURITY BREACH.',
     kanji: '電脳術',
     rank: 'A-RANK SECURITY',
     threat: 'A-TIER',
@@ -541,7 +570,7 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
               return (
                 <div
                   key={quest.id}
-                  className={`group relative w-[285px] xs:w-[320px] sm:w-[360px] lg:w-[390px] h-[435px] xs:h-[465px] sm:h-[505px] lg:h-[535px] select-none shrink-0 ${verticalFloat}`}
+                  className={`group relative w-[310px] xs:w-[345px] sm:w-[385px] lg:w-[415px] h-[535px] xs:h-[565px] sm:h-[605px] lg:h-[635px] select-none shrink-0 ${verticalFloat}`}
                   style={{
                     perspective: 1400,
                     transform: isFlipped
@@ -577,141 +606,272 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
                     {/* FRONT FACE (QUEST BRIEFING)                       */}
                     {/* ================================================= */}
                     <div
-                      className="absolute inset-0 w-full h-full rounded-2xl border border-white/20 hover:border-red-500/80 transition-colors duration-300 overflow-hidden flex flex-col justify-between shadow-[0_25px_60px_rgba(0,0,0,0.85),0_0_25px_rgba(220,38,38,0.15)]"
+                      className="absolute inset-0 w-full h-full rounded-3xl border border-sky-400/40 hover:border-cyan-300/80 transition-all duration-500 overflow-hidden flex flex-col justify-between shadow-[0_25px_60px_rgba(0,0,0,0.92),0_0_35px_rgba(0,212,255,0.22),inset_0_0_35px_rgba(168,85,247,0.18)]"
                       style={{
                         backfaceVisibility: 'hidden',
                         WebkitBackfaceVisibility: 'hidden',
                         transform: 'rotateY(0deg) translateZ(1px)',
-                        backdropFilter: 'blur(20px)',
-                        WebkitBackdropFilter: 'blur(20px)',
+                        backdropFilter: 'blur(24px)',
+                        WebkitBackdropFilter: 'blur(24px)',
                         background:
-                          'linear-gradient(165deg, rgba(255, 255, 255, 0.16) 0%, rgba(20, 5, 5, 0.84) 35%, rgba(0, 0, 0, 0.95) 100%)',
+                          'radial-gradient(ellipse at 25% 15%, rgba(30, 58, 138, 0.45) 0%, rgba(15, 6, 32, 0.96) 50%, #05020a 100%)',
                       }}
                     >
                       {/* Glowing Top Accent Line */}
                       <div
-                        className="absolute top-0 inset-x-0 h-[3px] opacity-70 group-hover:opacity-100 transition-opacity"
-                        style={{ backgroundColor: quest.color }}
+                        className="absolute top-0 inset-x-0 h-[3px] opacity-80 group-hover:opacity-100 transition-opacity bg-gradient-to-r from-cyan-400 via-purple-500 to-cyan-400"
                       />
 
+                      {/* Ambient Card Particles / Dungeon Chains Watermark */}
+                      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+                        {/* Cosmic nebula glow top-left */}
+                        <div className="absolute -top-12 -left-12 w-48 h-48 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none" />
+                        {/* Abyssal violet glow bottom-right */}
+                        <div className="absolute -bottom-16 -right-16 w-56 h-56 bg-purple-600/20 rounded-full blur-3xl pointer-events-none" />
+
+                        {/* Diagonal Heavy Dungeon Chains Rising from Bottom-Right */}
+                        <svg
+                          className="absolute -bottom-4 right-0 w-44 h-64 text-purple-600/30 drop-shadow-[0_0_12px_rgba(168,85,247,0.3)] pointer-events-none select-none"
+                          viewBox="0 0 160 220"
+                          fill="none"
+                        >
+                          <g transform="rotate(-38 100 120)">
+                            <path d="M50 0 C40 0 35 15 35 30 C35 45 40 60 50 60 C60 60 65 45 65 30 C65 15 60 0 50 0 Z M50 12 C54 12 56 20 56 30 C56 40 54 48 50 48 C46 48 44 40 44 30 C44 20 46 12 50 12 Z" fill="currentColor" />
+                            <path d="M50 42 C40 42 35 57 35 72 C35 87 40 102 50 102 C60 102 65 87 65 72 C65 57 60 42 50 42 Z M50 54 C54 54 56 62 56 72 C56 82 54 90 50 90 C46 90 44 82 44 72 C44 62 46 54 50 54 Z" fill="currentColor" opacity="0.85" />
+                            <path d="M50 84 C40 84 35 99 35 114 C35 129 40 144 50 144 C60 144 65 129 65 114 C65 99 60 84 50 84 Z M50 96 C54 96 56 104 56 114 C56 124 54 132 50 132 C46 132 44 124 44 114 C44 104 46 96 50 96 Z" fill="currentColor" opacity="0.7" />
+                            <path d="M50 126 C40 126 35 141 35 156 C35 171 40 186 50 186 C60 186 65 171 65 156 C65 141 60 126 50 126 Z M50 138 C54 138 56 146 56 156 C56 166 54 174 50 174 C46 174 44 166 44 156 C44 146 46 138 50 138 Z" fill="currentColor" opacity="0.55" />
+                            <path d="M50 168 C40 168 35 183 35 198 C35 213 40 228 50 228 C60 228 65 213 65 198 C65 183 60 168 50 168 Z M50 180 C54 180 56 188 56 198 C56 208 54 216 50 216 C46 216 44 208 44 198 C44 188 46 180 50 180 Z" fill="currentColor" opacity="0.4" />
+                          </g>
+                          <path
+                            d="M125 155 L130 167 L145 163 L136 175 L150 183 L134 181 L125 195 L116 181 L100 183 L114 175 L105 163 L120 167 Z"
+                            fill="currentColor"
+                            opacity="0.45"
+                          />
+                        </svg>
+
+                        {/* Vertical Watermark Letters */}
+                        <div className="absolute bottom-20 right-3.5 flex flex-col items-center pointer-events-none select-none text-[8px] sm:text-[9px] font-orbitron font-bold tracking-[0.22em] text-purple-400/30 leading-tight">
+                          <span>HUNTER</span>
+                          <span>CODE</span>
+                          <span>EVOLVE</span>
+                        </div>
+                      </div>
+
                       {/* Card Header Info */}
-                      <div className="p-3.5 sm:p-4 pb-1.5 flex items-center justify-between z-10">
-                        <div className="flex items-center gap-2">
-                          <span
-                            className="font-orbitron px-2.5 py-0.5 rounded text-[10px] sm:text-xs font-bold uppercase tracking-wider border shadow-md"
-                            style={{
-                              backgroundColor: 'rgba(5, 8, 17, 0.85)',
-                              borderColor: quest.color,
-                              color: quest.color,
-                            }}
-                          >
-                            {quest.rank}
-                          </span>
-                          <span className="text-[10px] font-orbitron uppercase text-zinc-400 tracking-wider">
+                      <div className="p-3.5 sm:p-4 pb-2 flex items-center justify-between z-10 relative">
+                        {/* Left: Glowing S-RANK RAID Badge */}
+                        <div className="flex items-center gap-2.5">
+                          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-gradient-to-r from-blue-950/85 via-purple-950/65 to-black/85 border border-[#00d4ff]/65 shadow-[0_0_15px_rgba(0,212,255,0.4)]">
+                            <span className="text-sm font-black italic bg-gradient-to-br from-[#00d4ff] via-purple-300 to-[#a855f7] bg-clip-text text-transparent filter drop-shadow-[0_0_6px_rgba(0,212,255,0.8)]">
+                              S
+                            </span>
+                            <span className="text-[11px] sm:text-xs font-orbitron font-extrabold italic tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-200 to-purple-300">
+                              {quest.rank}
+                            </span>
+                          </div>
+
+                          {/* Middle: Element Tag */}
+                          <span className="text-[10px] sm:text-[11px] font-system uppercase text-zinc-400 tracking-[0.2em] font-medium hidden xs:inline-block">
                             {quest.element}
                           </span>
                         </div>
 
-                        {/* Interactive Flip Badge & Kanji */}
-                        <div className="flex items-center gap-1.5">
+                        {/* Right: Flip Pill & Kanji Crown Pill */}
+                        <div className="flex items-center gap-2">
                           <button
                             type="button"
                             onClick={(e) => {
                               e.stopPropagation();
                               toggleFlip(quest.id);
                             }}
-                            title="Click to awaken card"
-                            className="font-system inline-flex items-center gap-1 px-2 py-0.5 rounded bg-purple-950/80 border border-purple-500/60 hover:bg-purple-900 text-purple-300 hover:text-white text-[10px] font-bold tracking-[0.1em] uppercase transition-all shadow-[0_0_10px_rgba(168,85,247,0.4)] cursor-pointer"
+                            title="Click to flip card"
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-purple-950/50 border border-purple-500/45 hover:bg-purple-900/60 text-purple-200 hover:text-white text-[10px] sm:text-[11px] font-orbitron font-bold tracking-[0.12em] uppercase transition-all duration-300 shadow-[0_0_12px_rgba(168,85,247,0.3)] cursor-pointer"
                           >
-                            <RotateCw className="w-2.5 h-2.5 text-purple-400" />
-                            <span>AWAKEN</span>
+                            <RotateCw className="w-3 h-3 text-[#00d4ff]" />
+                            <span>FLIP</span>
                           </button>
-                          <div className="font-shojumaru text-sm sm:text-base font-bold text-white/80 bg-black/60 px-2 py-0.5 rounded border border-white/10 backdrop-blur-md">
-                            {quest.kanji}
+
+                          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-black/80 border border-purple-900/50 text-white shadow-md">
+                            <span className="font-shojumaru text-xs sm:text-sm text-zinc-100">{quest.kanji}</span>
+                            <Crown className="w-3.5 h-3.5 text-purple-400" />
                           </div>
                         </div>
                       </div>
 
                       {/* Card Image Banner */}
-                      <div className="relative mx-3 sm:mx-4 h-34 xs:h-38 sm:h-44 rounded-xl overflow-hidden bg-black border border-white/10 shrink-0">
+                      <div className="relative mx-3.5 sm:mx-4 h-38 xs:h-42 sm:h-48 rounded-2xl overflow-hidden bg-black border border-purple-500/30 shrink-0 shadow-[0_10px_25px_rgba(0,0,0,0.85)] group-hover:border-purple-400/60 transition-colors">
                         <img
                           src={quest.image}
                           alt={quest.title}
-                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 filter saturate-110"
+                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 filter saturate-125 contrast-110"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-black/30" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/35" />
 
-                        {/* Prize Ribbon in Image */}
-                        <div className="absolute bottom-2 left-2.5 flex items-center gap-1.5 text-xs font-bold text-[#ffd700] drop-shadow-md bg-black/70 px-2.5 py-1 rounded-md border border-[#ffd700]/30 backdrop-blur-md">
-                          <Trophy className="w-3.5 h-3.5 text-[#ffd700]" />
-                          <span className="font-system tracking-wider font-bold">{quest.prize}</span>
+                        {/* Top-Right: Glowing Monarch Crest Glyph */}
+                        <div className="absolute top-2.5 right-3 pointer-events-none">
+                          <svg className="w-6 h-6 text-purple-400 drop-shadow-[0_0_10px_rgba(168,85,247,0.9)]" viewBox="0 0 48 48" fill="none">
+                            <path d="M24 4L26.5 14L32 9L29 17L38 16L30 22L40 28L28 27L24 42L20 27L8 28L18 22L10 16L19 17L16 9L21.5 14L24 4Z" fill="url(#crestGrad)" />
+                            <circle cx="24" cy="24" r="3" fill="#00d4ff" />
+                            <defs>
+                              <linearGradient id="crestGrad" x1="8" y1="4" x2="40" y2="42" gradientUnits="userSpaceOnUse">
+                                <stop stopColor="#c084fc" />
+                                <stop offset="1" stopColor="#38bdf8" />
+                              </linearGradient>
+                            </defs>
+                          </svg>
+                        </div>
+
+                        {/* Right Side: Franchise & Subtitle Typography */}
+                        <div className="absolute right-3.5 top-1/2 -translate-y-1/2 text-right pointer-events-none select-none">
+                          <div className="text-[9px] sm:text-[10px] font-solo font-bold tracking-[0.26em] text-white/95 drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+                            {quest.eyebrow ? quest.eyebrow.split(' ')[0] : 'SOLO'}
+                          </div>
+                          <div className="text-[9px] sm:text-[10px] font-solo font-bold tracking-[0.26em] text-white/95 drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)]">
+                            {quest.eyebrow && quest.eyebrow.split(' ')[1] ? quest.eyebrow.split(' ')[1] : 'LEVELING'}
+                          </div>
+                          <div className="text-[8px] sm:text-[8.5px] font-solo italic tracking-[0.2em] text-purple-300 mt-1 drop-shadow-[0_0_6px_rgba(168,85,247,0.8)]">
+                            "{quest.subtitle || 'ARISE.'}"
+                          </div>
+                        </div>
+
+                        {/* Bottom-Left: Prize Pill */}
+                        <div className="absolute bottom-2.5 left-2.5 flex items-center gap-2 text-xs font-bold bg-black/75 px-3 py-1.5 rounded-lg border border-purple-500/40 backdrop-blur-md shadow-[0_4px_15px_rgba(0,0,0,0.8)]">
+                          <Trophy className="w-3.5 h-3.5 text-[#ffd700] drop-shadow-[0_0_6px_rgba(255,215,0,0.6)]" />
+                          <span className="font-orbitron font-bold text-purple-100 text-[11px] sm:text-xs tracking-wider">
+                            {quest.prize}
+                          </span>
+                        </div>
+
+                        {/* Bottom-Right: Limited Slots */}
+                        <div className="absolute bottom-2.5 right-3 flex items-center gap-1.5 text-[9px] sm:text-[10px] font-orbitron font-medium text-purple-200/80 tracking-[0.16em] uppercase">
+                          <span className="w-2.5 h-[1px] bg-purple-400/50" />
+                          <span>LIMITED SLOTS</span>
+                          <span className="w-2.5 h-[1px] bg-purple-400/50" />
                         </div>
                       </div>
 
                       {/* Card Body Narrative */}
-                      <div className="p-3.5 sm:p-4 flex-1 flex flex-col justify-between z-10">
+                      <div className="p-3.5 sm:p-4 flex-1 flex flex-col justify-between z-10 relative">
                         <div>
-                          {/* Quest Title */}
-                          <h3 className="font-solo text-base sm:text-lg text-white font-bold tracking-[0.05em] group-hover:text-[#00d4ff] transition-colors leading-snug">
-                            {quest.title}
-                          </h3>
-
-                          {/* Snippet / Narrative Quote */}
-                          <p className="text-xs font-system text-zinc-300 mt-1.5 line-clamp-2 leading-relaxed font-normal tracking-wide">
-                            "{quest.snippet}"
-                          </p>
-                        </div>
-
-                        {/* Meta Row: Date & Team */}
-                        <div className="pt-2.5 border-t border-white/10 mt-2">
-                          <div className="flex items-center justify-between text-[11px] text-zinc-400 font-system tracking-wider mb-2.5">
-                            <span className="flex items-center gap-1 truncate">
-                              <Calendar className="w-3.5 h-3.5 text-[#00d4ff] shrink-0" />
-                              <span className="truncate">{quest.date}</span>
-                            </span>
-                            <span className="flex items-center gap-1 text-zinc-300 shrink-0">
-                              <Users className="w-3.5 h-3.5 text-zinc-400" />
-                              <span>{quest.team}</span>
-                            </span>
+                          {/* Small Franchise Eyebrow */}
+                          <div className="text-[9px] sm:text-[10px] font-orbitron font-bold tracking-[0.28em] text-zinc-400 uppercase mb-0.5">
+                            {quest.eyebrow || 'SOLO LEVELING'}
                           </div>
 
-                          {/* Action Buttons: Dossier & Enlist */}
-                          <div className="flex items-center gap-2">
+                          {/* Dual Anime Title */}
+                          <div className="flex flex-col">
+                            {/* Top Line: Aggressive Anime Brush/Slash Font */}
+                            <h3 className="font-slash italic text-2xl xs:text-[26px] sm:text-[30px] lg:text-[32px] tracking-wide leading-none text-transparent bg-clip-text bg-gradient-to-r from-[#a5f3fc] via-[#e0e7ff] to-[#c084fc] filter drop-shadow-[0_0_12px_rgba(0,212,255,0.4)] uppercase">
+                              {quest.titlePart1 || quest.title.split(' ').slice(0, 2).join(' ')}
+                            </h3>
+                            {/* Bottom Line: Wide Bold Sans/Orbitron Font */}
+                            <div className="font-system font-black tracking-[0.22em] text-white text-base xs:text-lg sm:text-xl lg:text-[22px] leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] uppercase mt-0.5">
+                              {quest.titlePart2 || quest.title.split(' ').slice(2).join(' ')}
+                            </div>
+                          </div>
+
+                          {/* Horizontal Glowing Light Flare */}
+                          <div className="relative my-2 sm:my-2.5 flex items-center justify-start w-full">
+                            <div className="h-[1.5px] w-48 sm:w-56 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-85" />
+                            <div className="absolute left-14 sm:left-16 w-3.5 h-3.5 bg-cyan-400/40 rounded-full blur-[3px]" />
+                            <div className="absolute left-15 sm:left-17 w-1 h-1 bg-white rounded-full shadow-[0_0_8px_#00d4ff]" />
+                          </div>
+
+                          {/* Quote / Snippet Box with Left Cyan Border */}
+                          <div className="border-l-[3px] border-[#00d4ff] pl-3 py-0.5">
+                            <p className="text-[11px] sm:text-xs text-zinc-300 font-system leading-relaxed tracking-wide">
+                              "{quest.snippet}"
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Metadata & Actions Container */}
+                        <div className="mt-3">
+                          {/* Two-Column Metadata */}
+                          <div className="grid grid-cols-2 gap-3 pb-3 border-b border-purple-900/30">
+                            {/* Left: Date & Time */}
+                            <div className="flex items-center gap-2.5">
+                              <div className="p-1.5 rounded-lg bg-purple-950/60 border border-purple-500/40 text-purple-300 shadow-[0_0_10px_rgba(168,85,247,0.3)] shrink-0">
+                                <Calendar className="w-4 h-4 text-purple-300" />
+                              </div>
+                              <div className="flex flex-col min-w-0">
+                                <span className="text-xs sm:text-sm font-bold text-white font-system tracking-wide truncate">
+                                  {quest.date.split('•')[0].trim()}
+                                </span>
+                                <span className="text-[10px] sm:text-[11px] text-zinc-400 font-system tracking-wider truncate">
+                                  {quest.date.includes('•') ? quest.date.split('•')[1].trim() : '10:00 AM - 1:00 PM'}
+                                </span>
+                              </div>
+                            </div>
+
+                            {/* Right: Team */}
+                            <div className="flex items-center gap-2.5">
+                              <div className="p-1.5 rounded-lg bg-purple-950/60 border border-purple-500/40 text-purple-300 shadow-[0_0_10px_rgba(168,85,247,0.3)] shrink-0">
+                                <Users className="w-4 h-4 text-purple-300" />
+                              </div>
+                              <div className="flex flex-col min-w-0">
+                                <span className="text-xs sm:text-sm font-bold text-white font-system tracking-wide truncate">
+                                  {quest.team}
+                                </span>
+                                <span className="text-[10px] sm:text-[11px] text-zinc-400 font-system tracking-wider truncate">
+                                  Choose your path
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Action Buttons: VIEW DOSSIER & ENLIST */}
+                          <div className="flex items-center gap-3 pt-3">
+                            {/* VIEW DOSSIER Primary Button */}
                             <button
                               type="button"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setActiveDossier(quest);
                               }}
-                              className="font-system flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-zinc-900/90 hover:bg-zinc-800 text-white text-xs uppercase tracking-[0.12em] font-semibold transition-colors cursor-pointer border border-purple-900/50 shadow-sm"
+                              className="group/btn relative flex-1 inline-flex items-center justify-center gap-2 py-2.5 px-3 sm:px-4 rounded-xl text-white font-orbitron font-bold text-[11px] sm:text-xs tracking-[0.14em] uppercase transition-all duration-300 cursor-pointer overflow-hidden shadow-[0_0_20px_rgba(59,130,246,0.45),0_0_40px_rgba(139,92,246,0.25)] hover:shadow-[0_0_30px_rgba(0,212,255,0.7)] hover:scale-[1.02]"
+                              style={{
+                                background: 'linear-gradient(105deg, #7c3aed 0%, #3b82f6 55%, #00d4ff 100%)',
+                              }}
                             >
-                              <span>Dossier</span>
-                              <ChevronRight className="w-3.5 h-3.5 text-[#00d4ff]" />
+                              <div className="absolute inset-0 bg-white/15 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+                              <span className="relative z-10">VIEW DOSSIER</span>
+                              <ArrowRight className="w-4 h-4 text-white relative z-10 group-hover/btn:translate-x-1 transition-transform" />
                             </button>
 
+                            {/* ENLIST Secondary Button */}
                             <button
                               type="button"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleRegister(quest.id);
                               }}
-                              className="font-system inline-flex items-center justify-center gap-1 py-2 px-3.5 rounded-lg text-xs font-bold uppercase tracking-[0.12em] transition-all cursor-pointer shadow-md"
+                              className="relative inline-flex items-center justify-center gap-2 py-2.5 px-4 sm:px-5 rounded-xl text-white font-orbitron font-bold text-[11px] sm:text-xs tracking-[0.14em] uppercase transition-all duration-300 cursor-pointer border shadow-[0_0_15px_rgba(0,0,0,0.6)] hover:scale-[1.02]"
                               style={{
-                                backgroundColor: isRegistered ? '#10b981' : quest.color,
-                                color: isRegistered ? '#ffffff' : '#050811',
+                                backgroundColor: isRegistered ? 'rgba(16, 185, 129, 0.2)' : 'rgba(10, 6, 20, 0.9)',
+                                borderColor: isRegistered ? '#10b981' : 'rgba(168, 85, 247, 0.45)',
+                                color: isRegistered ? '#10b981' : '#ffffff',
                               }}
                             >
                               {isRegistered ? (
                                 <>
-                                  <CheckCircle className="w-3.5 h-3.5" />
-                                  <span>Joined</span>
+                                  <span>JOINED</span>
+                                  <CheckCircle className="w-4 h-4 text-emerald-400" />
                                 </>
                               ) : (
                                 <>
-                                  <span>Enlist</span>
+                                  <span>ENLIST</span>
+                                  <Crown className="w-4 h-4 text-purple-300" />
                                 </>
                               )}
                             </button>
+                          </div>
+
+                          {/* Footer Line: LEVEL BEYOND LIMITS */}
+                          <div className="pt-2 flex items-center justify-center gap-3 text-[9px] font-orbitron tracking-[0.25em] text-purple-300/40 uppercase select-none">
+                            <span className="w-6 h-[1px] bg-gradient-to-r from-transparent to-purple-500/40" />
+                            <span>LEVEL BEYOND LIMITS</span>
+                            <span className="w-6 h-[1px] bg-gradient-to-l from-transparent to-purple-500/40" />
                           </div>
                         </div>
                       </div>
@@ -721,7 +881,7 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
                     {/* BACK FACE (AWAKENED FULL ART CARD1.PNG)          */}
                     {/* ================================================= */}
                     <div
-                      className="absolute inset-0 w-full h-full rounded-2xl border-2 border-purple-500/80 overflow-hidden flex flex-col justify-between shadow-[0_0_45px_rgba(168,85,247,0.55),0_25px_60px_rgba(0,0,0,0.95)]"
+                      className="absolute inset-0 w-full h-full rounded-3xl border-2 border-purple-500/80 overflow-hidden flex flex-col justify-between shadow-[0_0_45px_rgba(168,85,247,0.55),0_25px_60px_rgba(0,0,0,0.95)]"
                       style={{
                         backfaceVisibility: 'hidden',
                         WebkitBackfaceVisibility: 'hidden',
