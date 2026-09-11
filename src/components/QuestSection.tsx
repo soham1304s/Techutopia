@@ -266,7 +266,7 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
   // Passing smoothly over the pinned unboxed typography "GREAT RAIDS CAN'T HAPPEN WITHOUT HUNTERS."
   const isMobile = viewportWidth < 768;
   const isTablet = viewportWidth >= 768 && viewportWidth < 1024;
-  const startX = isMobile ? 5 : isTablet ? 18 : 46;
+  const startX = isMobile ? 5 : isTablet ? 6 : 6;
   const endX = isMobile ? -260 : isTablet ? -210 : -165;
 
   const trackX = useTransform(scrollYProgress, (v) => {
@@ -503,23 +503,23 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
       <div className="relative z-10 flex-1 w-full overflow-hidden flex items-center">
         {/* ======================================================== */}
         {/* SOLO LEVELING PINNED CANVAS TYPOGRAPHY                   */}
-        {/* Pinned directly on the background canvas, perfectly      */}
-        {/* aligned on the left without overlapping cards             */}
+        {/* Pinned directly on the background canvas, aligned on      */}
+        {/* the opposite (right) side of the page                     */}
         {/* ======================================================== */}
-        <div className="pointer-events-none absolute left-6 sm:left-10 lg:left-14 xl:left-20 top-1/2 -translate-y-1/2 z-0 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg select-none">
+        <div className="pointer-events-none absolute right-6 sm:right-10 lg:right-14 xl:right-20 top-1/2 -translate-y-1/2 z-0 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg select-none flex flex-col items-end text-right">
           {/* Japanese/Hangul Background Accent */}
-          <div className="font-solo text-6xl sm:text-8xl lg:text-9xl text-purple-500/10 leading-none select-none pointer-events-none mb-1 font-black tracking-widest">
+          <div className="font-solo text-6xl sm:text-8xl lg:text-9xl text-purple-500/10 leading-none select-none pointer-events-none mb-1 font-black tracking-widest text-right">
             ARISE
           </div>
 
           {/* System Alert Directive */}
-          <div className="flex items-center gap-2 text-xs font-orbitron font-semibold tracking-[0.2em] text-[#00d4ff] mb-2 uppercase">
+          <div className="flex items-center justify-end gap-2 text-xs font-orbitron font-semibold tracking-[0.2em] text-[#00d4ff] mb-2 uppercase">
+            <span>// SYSTEM ALERT : DUNGEON DIRECTIVE</span>
             <span className="inline-block w-2 h-2 rounded-sm bg-[#00d4ff] animate-ping" />
-            // SYSTEM ALERT : DUNGEON DIRECTIVE
           </div>
 
           {/* Big Pinned Statement */}
-          <h2 className="font-solo text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold uppercase tracking-[0.06em] text-white leading-[0.98] drop-shadow-[0_15px_35px_rgba(0,0,0,0.95)]">
+          <h2 className="font-solo text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold uppercase tracking-[0.06em] text-white leading-[0.98] drop-shadow-[0_15px_35px_rgba(0,0,0,0.95)] text-right">
             GREAT RAIDS<br />
             CAN'T HAPPEN<br />
             WITHOUT<br />
@@ -529,13 +529,13 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
           </h2>
 
           {/* Statement Tagline */}
-          <div className="mt-3 sm:mt-4 flex items-center gap-2 text-[11px] sm:text-xs font-orbitron font-semibold text-[#a855f7] uppercase tracking-[0.15em]">
-            <span className="text-[#00d4ff]">▶</span>
+          <div className="mt-3 sm:mt-4 flex items-center justify-end gap-2 text-[11px] sm:text-xs font-orbitron font-semibold text-[#a855f7] uppercase tracking-[0.15em]">
             <span>6 S-RANK DUNGEON GATES UNSEALED</span>
+            <span className="text-[#00d4ff]">◀</span>
           </div>
 
           {/* Narrative Line */}
-          <p className="mt-2 text-xs sm:text-sm text-zinc-300 font-system max-w-md hidden sm:block leading-relaxed tracking-wider uppercase">
+          <p className="mt-2 text-xs sm:text-sm text-zinc-300 font-system max-w-md hidden sm:block leading-relaxed tracking-wider uppercase text-right">
             The Monarch has unsealed 6 S-Rank Dungeon Gates across TECHFEST 2026. Assemble your guild squad, conquer the bosses, and claim your hunter bounty before portal collapse.
           </p>
         </div>
