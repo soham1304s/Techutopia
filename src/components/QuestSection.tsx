@@ -236,8 +236,8 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
   // Passing smoothly over the pinned unboxed typography "GREAT RAIDS CAN'T HAPPEN WITHOUT HUNTERS."
   const isMobile = viewportWidth < 768;
   const isTablet = viewportWidth >= 768 && viewportWidth < 1024;
-  const startX = isMobile ? 6 : isTablet ? 20 : 38;
-  const endX = isMobile ? -250 : isTablet ? -200 : -160;
+  const startX = isMobile ? 5 : isTablet ? 18 : 46;
+  const endX = isMobile ? -260 : isTablet ? -210 : -165;
 
   const trackX = useTransform(scrollYProgress, (v) => {
     if (v <= 0.66) return `${startX}vw`;
@@ -314,57 +314,66 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
         y: questY,
         pointerEvents: questPointerEvents,
         background:
-          'linear-gradient(135deg, #000000 0%, #170202 20%, #750000 44%, #c50000 64%, #f42c2c 82%, #ffffff 100%)',
+          'radial-gradient(ellipse at 15% 45%, #180833 0%, #0c031c 45%, #020005 100%)',
       }}
-      className="absolute inset-0 w-full min-w-full h-full min-h-full z-20 flex flex-col text-white overflow-hidden select-none border-b-2 border-red-600/70 shadow-[0_25px_60px_rgba(0,0,0,0.95)]"
+      className="absolute inset-0 w-full min-w-full h-full min-h-full z-20 flex flex-col text-white overflow-hidden select-none border-b-2 border-purple-900/50 shadow-[0_25px_60px_rgba(0,0,0,0.98)]"
     >
-      {/* Background Ambient Glow & Subtle Texture (Black, White & Red Theme) */}
+      {/* Background Ambient Glow & Subtle Texture (Solo Leveling Shadow Monarch Theme) */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Deep Crimson Blood Flame Aura */}
+        {/* Shadow Monarch Abyssal Violet Nebula */}
         <div
-          className="absolute -top-32 left-1/4 w-[75vw] h-[450px]"
+          className="absolute -top-24 left-10 w-[70vw] h-[500px]"
           style={{
             background:
-              'radial-gradient(ellipse at center, rgba(235, 0, 0, 0.38) 0%, rgba(120, 0, 0, 0.22) 45%, transparent 70%)',
+              'radial-gradient(ellipse at center, rgba(139, 92, 246, 0.28) 0%, rgba(76, 29, 149, 0.18) 45%, transparent 70%)',
+            filter: 'blur(90px)',
+          }}
+        />
+        {/* Electric Astral Cyan Blade / Monarch Eye Flare */}
+        <div
+          className="absolute -bottom-24 right-1/4 w-[60vw] h-[400px]"
+          style={{
+            background:
+              'radial-gradient(ellipse at center, rgba(0, 212, 255, 0.2) 0%, rgba(30, 58, 138, 0.15) 45%, transparent 70%)',
+            filter: 'blur(85px)',
+          }}
+        />
+        {/* S-Rank Dungeon Gate Crimson Rift Glow */}
+        <div
+          className="absolute top-1/4 right-10 w-[45vw] h-[350px]"
+          style={{
+            background:
+              'radial-gradient(ellipse at center, rgba(220, 38, 38, 0.2) 0%, rgba(153, 27, 27, 0.1) 40%, transparent 65%)',
             filter: 'blur(80px)',
           }}
         />
-        {/* Bright White Spectral Astral Flare */}
+        {/* Fine Anime Dot Matrix & Dungeon Grid */}
         <div
-          className="absolute -bottom-24 right-1/4 w-[65vw] h-[360px]"
-          style={{
-            background:
-              'radial-gradient(ellipse at center, rgba(255, 255, 255, 0.32) 0%, rgba(255, 90, 90, 0.18) 45%, transparent 70%)',
-            filter: 'blur(75px)',
-          }}
-        />
-        {/* Fine Anime Dot Matrix Pattern */}
-        <div
-          className="absolute inset-0 opacity-20"
+          className="absolute inset-0 opacity-15"
           style={{
             backgroundImage:
-              'radial-gradient(rgba(255,255,255,0.22) 1px, transparent 1px), radial-gradient(rgba(230,0,0,0.22) 1px, transparent 1px)',
+              'radial-gradient(rgba(168, 85, 247, 0.3) 1px, transparent 1px), radial-gradient(rgba(0, 212, 255, 0.25) 1px, transparent 1px)',
             backgroundSize: '40px 40px',
             backgroundPosition: '0 0, 20px 20px',
           }}
         />
       </div>
 
-      {/* Sleek Minimal Top Navigation HUD (Unboxed) */}
-      <div className="relative z-30 w-full px-4 sm:px-8 py-3 flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-white/10 bg-black/40 backdrop-blur-md">
+      {/* Sleek Solo Leveling System Top Navigation HUD */}
+      <div className="relative z-30 w-full px-4 sm:px-8 py-3 flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-purple-900/30 bg-black/60 backdrop-blur-md">
         {/* Left: Quest System Tag & Category Pills */}
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 lg:gap-6">
           <div className="flex items-center gap-2.5">
-            <span className="font-naruto inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-red-500/60 bg-red-950/70 text-red-300 text-[10px] sm:text-xs font-bold tracking-widest uppercase shadow-[0_0_12px_rgba(239,68,68,0.3)]">
-              <Flame className="w-3.5 h-3.5 text-red-500 animate-pulse" />
-              SYSTEM QUESTS
+            <span className="font-orbitron inline-flex items-center gap-1.5 px-3 py-1 rounded-sm border border-[#00d4ff]/60 bg-[#00d4ff]/10 text-[#00d4ff] text-[10px] sm:text-xs font-bold tracking-[0.15em] uppercase shadow-[0_0_15px_rgba(0,212,255,0.3)]">
+              <Flame className="w-3.5 h-3.5 text-[#00d4ff] animate-pulse" />
+              [ SYSTEM : QUEST DIRECTIVE ]
             </span>
-            <span className="text-[10px] sm:text-xs font-mono font-bold text-[#ffd700] bg-black/70 px-2.5 py-1 rounded-full border border-[#ffd700]/30 shadow-sm">
-              ₹3.4L+ POOL
+            <span className="text-[10px] sm:text-xs font-orbitron font-bold text-[#ffd700] bg-black/80 px-2.5 py-1 rounded-sm border border-[#ffd700]/40 tracking-wider shadow-sm">
+              ₹3.4L+ BOUNTY POOL
             </span>
           </div>
 
-          {/* Hunter Class Categories (Horizontal Scrollable Pills) */}
+          {/* Hunter Class Categories (Horizontal Scrollable Holographic Tabs) */}
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
             {CATEGORIES.map((cat) => {
               const isActive = selectedCategory === cat;
@@ -372,12 +381,12 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className="font-naruto relative px-3 py-1 rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider transition-all whitespace-nowrap cursor-pointer border shrink-0"
+                  className="font-system relative px-3 py-1 rounded text-[11px] sm:text-xs font-semibold uppercase tracking-[0.12em] transition-all whitespace-nowrap cursor-pointer border shrink-0"
                   style={{
-                    backgroundColor: isActive ? '#dc2626' : 'rgba(0, 0, 0, 0.5)',
-                    color: isActive ? '#ffffff' : '#d4d4d8',
-                    borderColor: isActive ? '#f87171' : 'rgba(255, 255, 255, 0.15)',
-                    boxShadow: isActive ? '0 0 14px rgba(220, 38, 38, 0.6)' : 'none',
+                    backgroundColor: isActive ? 'rgba(124, 58, 237, 0.85)' : 'rgba(10, 5, 20, 0.65)',
+                    color: isActive ? '#ffffff' : '#94a3b8',
+                    borderColor: isActive ? '#a855f7' : 'rgba(124, 58, 237, 0.25)',
+                    boxShadow: isActive ? '0 0 16px rgba(168, 85, 247, 0.6)' : 'none',
                   }}
                 >
                   {cat}
@@ -395,10 +404,10 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-400" />
             <input
               type="text"
-              placeholder="Search raids, tags..."
+              placeholder="Search raid boss, rank, guild..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-8 pr-7 py-1 rounded-full bg-zinc-950/80 border border-zinc-700/80 text-xs text-white placeholder-zinc-400 focus:outline-none focus:border-red-500 transition-colors shadow-inner"
+              className="w-full pl-8 pr-7 py-1 rounded bg-black/80 border border-purple-900/50 text-xs font-system text-white placeholder-zinc-500 focus:outline-none focus:border-[#00d4ff] transition-colors shadow-inner"
             />
             {searchQuery && (
               <button
@@ -411,14 +420,14 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
           </div>
 
           {/* Raid Stream Progress Pill */}
-          <div className="hidden lg:flex items-center gap-2 bg-black/80 px-3 py-1 rounded-full border border-red-500/30 backdrop-blur-md shadow-md">
-            <span className="text-[10px] font-mono text-zinc-300 uppercase tracking-wider">
+          <div className="hidden lg:flex items-center gap-2 bg-black/80 px-3 py-1 rounded border border-purple-500/30 backdrop-blur-md shadow-md">
+            <span className="text-[10px] font-orbitron text-zinc-300 uppercase tracking-wider">
               Raid Stream
             </span>
             <div className="w-16 h-1.5 bg-zinc-900 rounded-full overflow-hidden border border-white/10">
               <motion.div
                 style={{ width: scrollIndicatorWidth }}
-                className="h-full bg-gradient-to-r from-[#ffffff] via-[#dc2626] to-[#000000]"
+                className="h-full bg-gradient-to-r from-[#00d4ff] via-[#a855f7] to-[#ffffff]"
               />
             </div>
           </div>
@@ -427,9 +436,9 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
           <button
             onClick={scrollToAbout}
             title="Return to About Section"
-            className="font-naruto inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full border border-red-500/40 bg-black/80 text-zinc-200 hover:text-white hover:border-red-500 hover:shadow-[0_0_15px_rgba(220,38,38,0.4)] transition-all text-xs shrink-0 cursor-pointer backdrop-blur-md"
+            className="font-system inline-flex items-center gap-1.5 px-3.5 py-1 rounded border border-purple-500/40 bg-black/80 text-zinc-200 hover:text-white hover:border-[#00d4ff] hover:shadow-[0_0_15px_rgba(0,212,255,0.4)] transition-all text-xs uppercase tracking-wider shrink-0 cursor-pointer backdrop-blur-md"
           >
-            <ArrowUp className="w-3.5 h-3.5 text-red-500" />
+            <ArrowUp className="w-3.5 h-3.5 text-[#00d4ff]" />
             <span>About</span>
           </button>
         </div>
@@ -438,35 +447,41 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
       {/* Main Interactive Stage */}
       <div className="relative z-10 flex-1 w-full overflow-hidden flex items-center">
         {/* ======================================================== */}
-        {/* NOOMO AGENCY PINNED CANVAS TYPOGRAPHY (UNBOXED)          */}
-        {/* Pinned directly on the background canvas, cards float    */}
-        {/* and blur over it dynamically in real-time                */}
+        {/* SOLO LEVELING PINNED CANVAS TYPOGRAPHY                   */}
+        {/* Pinned directly on the background canvas, perfectly      */}
+        {/* aligned on the left without overlapping cards             */}
         {/* ======================================================== */}
-        <div className="pointer-events-none absolute left-6 sm:left-12 lg:left-20 xl:left-24 top-1/2 -translate-y-1/2 z-0 max-w-md sm:max-w-lg lg:max-w-xl xl:max-w-2xl select-none">
-          {/* Japanese Kanji Faint Watermark Accent */}
-          <div className="font-shojumaru text-6xl sm:text-8xl lg:text-9xl text-red-500/10 leading-none select-none pointer-events-none mb-1">
-            試練
+        <div className="pointer-events-none absolute left-6 sm:left-10 lg:left-14 xl:left-20 top-1/2 -translate-y-1/2 z-0 max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg select-none">
+          {/* Japanese/Hangul Background Accent */}
+          <div className="font-solo text-6xl sm:text-8xl lg:text-9xl text-purple-500/10 leading-none select-none pointer-events-none mb-1 font-black tracking-widest">
+            ARISE
+          </div>
+
+          {/* System Alert Directive */}
+          <div className="flex items-center gap-2 text-xs font-orbitron font-semibold tracking-[0.2em] text-[#00d4ff] mb-2 uppercase">
+            <span className="inline-block w-2 h-2 rounded-sm bg-[#00d4ff] animate-ping" />
+            // SYSTEM ALERT : DUNGEON DIRECTIVE
           </div>
 
           {/* Big Pinned Statement */}
-          <h2 className="font-naruto text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black uppercase tracking-tight text-white leading-[0.92] drop-shadow-[0_15px_35px_rgba(0,0,0,0.9)]">
+          <h2 className="font-solo text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold uppercase tracking-[0.06em] text-white leading-[0.98] drop-shadow-[0_15px_35px_rgba(0,0,0,0.95)]">
             GREAT RAIDS<br />
             CAN'T HAPPEN<br />
             WITHOUT<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff2222] via-[#ffffff] to-[#ff4444]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00d4ff] via-[#c084fc] to-[#ffffff] drop-shadow-[0_0_25px_rgba(0,212,255,0.6)]">
               HUNTERS.
             </span>
           </h2>
 
           {/* Statement Tagline */}
-          <div className="mt-3 sm:mt-5 flex items-center gap-2 text-[11px] sm:text-xs font-mono font-bold text-red-400 uppercase tracking-wider">
-            <span className="text-red-500">▶</span>
-            <span>6 S-RANK DUNGEONS // TECHFEST 2026</span>
+          <div className="mt-3 sm:mt-4 flex items-center gap-2 text-[11px] sm:text-xs font-orbitron font-semibold text-[#a855f7] uppercase tracking-[0.15em]">
+            <span className="text-[#00d4ff]">▶</span>
+            <span>6 S-RANK DUNGEON GATES UNSEALED</span>
           </div>
 
           {/* Narrative Line */}
-          <p className="mt-2 text-xs sm:text-sm text-zinc-300/80 font-sans max-w-md hidden sm:block leading-relaxed">
-            The Monarch has unsealed 6 S-Rank Dungeon Gates across TECHFEST 2026. Select your specialization, assemble your squad, and conquer the bosses before time portal collapse.
+          <p className="mt-2 text-xs sm:text-sm text-zinc-300 font-system max-w-md hidden sm:block leading-relaxed tracking-wider uppercase">
+            The Monarch has unsealed 6 S-Rank Dungeon Gates across TECHFEST 2026. Assemble your guild squad, conquer the bosses, and claim your hunter bounty before portal collapse.
           </p>
         </div>
 
@@ -557,7 +572,7 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
                       <div className="p-3.5 sm:p-4 pb-1.5 flex items-center justify-between z-10">
                         <div className="flex items-center gap-2">
                           <span
-                            className="font-naruto px-2.5 py-0.5 rounded text-[10px] sm:text-xs font-bold uppercase tracking-wider border shadow-md"
+                            className="font-orbitron px-2.5 py-0.5 rounded text-[10px] sm:text-xs font-bold uppercase tracking-wider border shadow-md"
                             style={{
                               backgroundColor: 'rgba(5, 8, 17, 0.85)',
                               borderColor: quest.color,
@@ -566,7 +581,7 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
                           >
                             {quest.rank}
                           </span>
-                          <span className="text-[10px] font-mono uppercase text-zinc-400">
+                          <span className="text-[10px] font-orbitron uppercase text-zinc-400 tracking-wider">
                             {quest.element}
                           </span>
                         </div>
@@ -580,10 +595,10 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
                               toggleFlip(quest.id);
                             }}
                             title="Click to awaken card"
-                            className="font-naruto inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-950/70 border border-red-500/50 hover:bg-red-900 text-red-300 hover:text-white text-[10px] font-semibold tracking-wider uppercase transition-all shadow-sm cursor-pointer"
+                            className="font-system inline-flex items-center gap-1 px-2 py-0.5 rounded bg-purple-950/80 border border-purple-500/60 hover:bg-purple-900 text-purple-300 hover:text-white text-[10px] font-bold tracking-[0.1em] uppercase transition-all shadow-[0_0_10px_rgba(168,85,247,0.4)] cursor-pointer"
                           >
-                            <RotateCw className="w-2.5 h-2.5 text-red-400" />
-                            <span>FLIP</span>
+                            <RotateCw className="w-2.5 h-2.5 text-purple-400" />
+                            <span>AWAKEN</span>
                           </button>
                           <div className="font-shojumaru text-sm sm:text-base font-bold text-white/80 bg-black/60 px-2 py-0.5 rounded border border-white/10 backdrop-blur-md">
                             {quest.kanji}
@@ -603,7 +618,7 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
                         {/* Prize Ribbon in Image */}
                         <div className="absolute bottom-2 left-2.5 flex items-center gap-1.5 text-xs font-bold text-[#ffd700] drop-shadow-md bg-black/70 px-2.5 py-1 rounded-md border border-[#ffd700]/30 backdrop-blur-md">
                           <Trophy className="w-3.5 h-3.5 text-[#ffd700]" />
-                          <span className="font-naruto tracking-wider">{quest.prize}</span>
+                          <span className="font-system tracking-wider font-bold">{quest.prize}</span>
                         </div>
                       </div>
 
@@ -611,19 +626,19 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
                       <div className="p-3.5 sm:p-4 flex-1 flex flex-col justify-between z-10">
                         <div>
                           {/* Quest Title */}
-                          <h3 className="font-naruto text-base sm:text-lg text-white font-bold tracking-wider group-hover:text-[#00d4ff] transition-colors leading-snug">
+                          <h3 className="font-solo text-base sm:text-lg text-white font-bold tracking-[0.05em] group-hover:text-[#00d4ff] transition-colors leading-snug">
                             {quest.title}
                           </h3>
 
                           {/* Snippet / Narrative Quote */}
-                          <p className="text-xs text-zinc-300 mt-1.5 line-clamp-2 leading-relaxed font-normal">
+                          <p className="text-xs font-system text-zinc-300 mt-1.5 line-clamp-2 leading-relaxed font-normal tracking-wide">
                             "{quest.snippet}"
                           </p>
                         </div>
 
                         {/* Meta Row: Date & Team */}
                         <div className="pt-2.5 border-t border-white/10 mt-2">
-                          <div className="flex items-center justify-between text-[11px] text-zinc-400 font-mono mb-2.5">
+                          <div className="flex items-center justify-between text-[11px] text-zinc-400 font-system tracking-wider mb-2.5">
                             <span className="flex items-center gap-1 truncate">
                               <Calendar className="w-3.5 h-3.5 text-[#00d4ff] shrink-0" />
                               <span className="truncate">{quest.date}</span>
@@ -642,7 +657,7 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
                                 e.stopPropagation();
                                 setActiveDossier(quest);
                               }}
-                              className="font-naruto flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-zinc-800/90 hover:bg-zinc-700 text-white text-xs uppercase tracking-wider transition-colors cursor-pointer border border-zinc-600 shadow-sm"
+                              className="font-system flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-zinc-900/90 hover:bg-zinc-800 text-white text-xs uppercase tracking-[0.12em] font-semibold transition-colors cursor-pointer border border-purple-900/50 shadow-sm"
                             >
                               <span>Dossier</span>
                               <ChevronRight className="w-3.5 h-3.5 text-[#00d4ff]" />
@@ -654,7 +669,7 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
                                 e.stopPropagation();
                                 handleRegister(quest.id);
                               }}
-                              className="font-naruto inline-flex items-center justify-center gap-1 py-2 px-3.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer shadow-md"
+                              className="font-system inline-flex items-center justify-center gap-1 py-2 px-3.5 rounded-lg text-xs font-bold uppercase tracking-[0.12em] transition-all cursor-pointer shadow-md"
                               style={{
                                 backgroundColor: isRegistered ? '#10b981' : quest.color,
                                 color: isRegistered ? '#ffffff' : '#050811',
@@ -709,7 +724,7 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
 
                       {/* Top Header Floating Badge */}
                       <div className="relative z-20 p-3 sm:p-4 flex items-center justify-between">
-                        <span className="font-naruto text-[10px] sm:text-xs px-2.5 py-1 rounded-full bg-black/80 border border-purple-500/70 text-purple-300 shadow-[0_0_15px_rgba(168,85,247,0.6)] flex items-center gap-1.5 backdrop-blur-md">
+                        <span className="font-orbitron text-[10px] sm:text-xs px-2.5 py-1 rounded-sm bg-black/80 border border-purple-500/70 text-purple-300 shadow-[0_0_15px_rgba(168,85,247,0.6)] flex items-center gap-1.5 backdrop-blur-md tracking-[0.1em]">
                           <Sparkles className="w-3 h-3 text-purple-400 animate-pulse" />
                           {quest.id === 1 ? 'SHADOW MONARCH AWAKENED' : `${quest.rank} AWAKENED`}
                         </span>
@@ -723,7 +738,7 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
                       <div className="relative z-20 p-3 sm:p-4 space-y-2">
                         {/* Quote from Solo Leveling */}
                         <div className="px-2.5 py-1.5 rounded-lg bg-black/75 border border-purple-500/30 backdrop-blur-md">
-                          <p className="font-mono text-[10px] sm:text-[11px] text-purple-200/90 leading-tight italic">
+                          <p className="font-solo text-[11px] sm:text-xs text-purple-100/95 leading-tight italic tracking-wide">
                             {quest.id === 1
                               ? '"I don\'t just become stronger. I leave everything behind."'
                               : `"${quest.snippet}"`}
@@ -738,7 +753,7 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
                               e.stopPropagation();
                               toggleFlip(quest.id);
                             }}
-                            className="font-naruto flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-black/85 hover:bg-purple-950 text-white text-xs uppercase tracking-wider transition-all border border-purple-500/60 shadow-[0_0_15px_rgba(168,85,247,0.4)] backdrop-blur-md cursor-pointer hover:border-purple-400"
+                            className="font-system flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-black/85 hover:bg-purple-950 text-white text-xs uppercase tracking-[0.12em] font-semibold transition-all border border-purple-500/60 shadow-[0_0_15px_rgba(168,85,247,0.4)] backdrop-blur-md cursor-pointer hover:border-purple-400"
                           >
                             <RotateCw className="w-3.5 h-3.5 text-purple-400" />
                             <span>FLIP TO QUEST</span>
@@ -750,7 +765,7 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
                               e.stopPropagation();
                               handleRegister(quest.id);
                             }}
-                            className="font-naruto px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs uppercase tracking-wider font-bold shadow-[0_0_20px_rgba(147,51,234,0.6)] transition-all cursor-pointer"
+                            className="font-system px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs uppercase tracking-[0.12em] font-bold shadow-[0_0_20px_rgba(147,51,234,0.6)] transition-all cursor-pointer"
                           >
                             {isRegistered ? 'JOINED' : 'ENLIST'}
                           </button>
@@ -797,9 +812,9 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
                 {/* Rank Pill & Kanji */}
                 <div className="absolute top-3 left-3 flex items-center gap-2">
                   <span
-                    className="font-naruto px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider border shadow-md"
+                    className="font-orbitron px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider border shadow-md"
                     style={{
-                      backgroundColor: 'rgba(0,0,0,0.8)',
+                      backgroundColor: 'rgba(0,0,0,0.85)',
                       borderColor: activeDossier.color,
                       color: activeDossier.color,
                     }}
@@ -813,10 +828,10 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
 
                 {/* Title and Prize in Banner */}
                 <div className="absolute bottom-3 inset-x-4">
-                  <h2 className="font-naruto text-xl sm:text-2xl md:text-3xl text-white font-bold tracking-wide">
+                  <h2 className="font-solo text-xl sm:text-2xl md:text-3xl text-white font-bold tracking-wide">
                     {activeDossier.title}
                   </h2>
-                  <div className="flex items-center gap-2 text-xs font-bold text-[#ffd700] mt-1">
+                  <div className="flex items-center gap-2 text-xs font-orbitron font-bold text-[#ffd700] mt-1">
                     <Trophy className="w-4 h-4" />
                     <span>PRIZE BOUNTY: {activeDossier.prize}</span>
                   </div>
@@ -824,25 +839,25 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
               </div>
 
               {/* Modal Scrollable Body */}
-              <div className="p-4 sm:p-6 overflow-y-auto space-y-4">
+              <div className="p-4 sm:p-6 overflow-y-auto space-y-4 font-system">
                 {/* Meta Grid */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
                   <div className="p-2.5 rounded bg-zinc-900/80 border border-zinc-800">
-                    <div className="text-zinc-500 font-mono text-[10px] uppercase">Category</div>
+                    <div className="text-zinc-500 font-orbitron text-[10px] uppercase">Category</div>
                     <div className="font-bold text-zinc-200 mt-0.5">{activeDossier.category}</div>
                   </div>
                   <div className="p-2.5 rounded bg-zinc-900/80 border border-zinc-800">
-                    <div className="text-zinc-500 font-mono text-[10px] uppercase">Raid Squad</div>
+                    <div className="text-zinc-500 font-orbitron text-[10px] uppercase">Raid Squad</div>
                     <div className="font-bold text-zinc-200 mt-0.5">{activeDossier.team}</div>
                   </div>
                   <div className="p-2.5 rounded bg-zinc-900/80 border border-zinc-800 col-span-2 sm:col-span-1">
-                    <div className="text-zinc-500 font-mono text-[10px] uppercase">Threat Tier</div>
+                    <div className="text-zinc-500 font-orbitron text-[10px] uppercase">Threat Tier</div>
                     <div className="font-bold text-[#ff0055] mt-0.5">{activeDossier.threat}</div>
                   </div>
                 </div>
 
                 {/* Schedule & Venue */}
-                <div className="space-y-1.5 text-xs text-zinc-300 font-mono bg-zinc-900/40 p-3 rounded border border-zinc-800">
+                <div className="space-y-1.5 text-xs text-zinc-300 font-system bg-zinc-900/40 p-3 rounded border border-zinc-800">
                   <div className="flex items-center gap-2">
                     <Calendar className="w-3.5 h-3.5 text-[#00d4ff]" />
                     <span>{activeDossier.date}</span>
@@ -855,7 +870,7 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
 
                 {/* Mission Narrative */}
                 <div>
-                  <h4 className="font-naruto text-xs text-[#00d4ff] uppercase tracking-wider mb-1">
+                  <h4 className="font-orbitron text-xs text-[#00d4ff] uppercase tracking-wider mb-1 font-semibold">
                     MISSION BRIEFING
                   </h4>
                   <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed font-normal">
@@ -865,7 +880,7 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
 
                 {/* Raid Rules */}
                 <div>
-                  <h4 className="font-naruto text-xs text-[#ffd700] uppercase tracking-wider mb-1.5">
+                  <h4 className="font-orbitron text-xs text-[#ffd700] uppercase tracking-wider mb-1.5 font-semibold">
                     RAID CODEX & RULES
                   </h4>
                   <ul className="space-y-1.5">
@@ -883,7 +898,7 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
               <div className="p-4 border-t border-zinc-800 bg-zinc-950 flex items-center justify-between gap-3 shrink-0">
                 <button
                   onClick={() => setActiveDossier(null)}
-                  className="font-naruto px-4 py-2 rounded text-xs text-zinc-400 hover:text-white uppercase tracking-wider cursor-pointer transition-colors"
+                  className="font-system px-4 py-2 rounded text-xs text-zinc-400 hover:text-white uppercase tracking-wider cursor-pointer transition-colors"
                 >
                   Close
                 </button>
@@ -894,7 +909,7 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
                     alert(`Enlisted for ${activeDossier.title}! Your hunter pass has been verified.`);
                     setActiveDossier(null);
                   }}
-                  className="font-naruto flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-6 py-2 rounded text-xs font-bold uppercase tracking-wider transition-all cursor-pointer shadow-lg"
+                  className="font-system flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-6 py-2 rounded text-xs font-bold uppercase tracking-wider transition-all cursor-pointer shadow-lg"
                   style={{
                     backgroundColor: registeredMap[activeDossier.id] ? '#10b981' : activeDossier.color,
                     color: registeredMap[activeDossier.id] ? '#ffffff' : '#050811',

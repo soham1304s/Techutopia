@@ -10,11 +10,29 @@
 }
 
 @theme {
+  --font-solo: 'Cinzel', 'Trajan Pro', serif;
+  --font-system: 'Rajdhani', 'Orbitron', sans-serif;
+  --font-orbitron: 'Orbitron', monospace;
   --font-naruto: 'Ninja Naruto', 'Shojumaru', 'Dela Gothic One', sans-serif;
   --font-shojumaru: 'Shojumaru', cursive;
   --font-dela: 'Dela Gothic One', sans-serif;
   --font-anton: 'Anton', sans-serif;
   --font-inter: 'Inter', sans-serif;
+}
+
+.font-solo {
+  font-family: 'Cinzel', 'Trajan Pro', serif;
+  letter-spacing: 0.08em;
+}
+
+.font-system {
+  font-family: 'Rajdhani', 'Orbitron', sans-serif;
+  letter-spacing: 0.06em;
+}
+
+.font-orbitron {
+  font-family: 'Orbitron', monospace;
+  letter-spacing: 0.08em;
 }
 
 .font-naruto {
