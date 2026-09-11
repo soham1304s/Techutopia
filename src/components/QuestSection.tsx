@@ -20,6 +20,7 @@ import {
 
 import card1Image from './card1.png';
 import back4Image from './back4.png';
+import jinwooImage from './jinwoo.png';
 import art1 from '../assets/quests/1.png';
 import art2 from '../assets/quests/2.png';
 import art3 from '../assets/quests/3.png';
@@ -288,6 +289,11 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
   const bgScale = useTransform(scrollYProgress, [0.66, 0.98], [1.02, 1.08]);
   const bgX = useTransform(scrollYProgress, [0.66, 0.98], ['0%', '-3%']);
 
+  // Parallax motion for Sung Jin-Woo Shadow Monarch character art
+  const jinwooScale = useTransform(scrollYProgress, [0.66, 0.98], [1.0, 1.05]);
+  const jinwooY = useTransform(scrollYProgress, [0.66, 0.98], ['0%', '3%']);
+  const jinwooX = useTransform(scrollYProgress, [0.66, 0.98], ['0%', '-2%']);
+
   const filteredQuests = QUESTS.filter((quest) => {
     const matchesCategory =
       selectedCategory === 'All' || quest.category.toLowerCase() === selectedCategory.toLowerCase();
@@ -373,6 +379,29 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
               background: 'radial-gradient(circle at 40% 50%, transparent 20%, rgba(2,0,5,0.7) 70%, #020005 100%)',
             }}
           />
+        </motion.div>
+
+        {/* Sung Jin-Woo Shadow Monarch Character Art (jinwoo.png) */}
+        {/* Positioned on the right side of the canvas (opposite side of the pinned text) */}
+        <motion.div
+          style={{ scale: jinwooScale, y: jinwooY, x: jinwooX }}
+          className="absolute right-0 sm:right-4 md:right-8 lg:right-14 xl:right-24 bottom-0 h-[75vh] sm:h-[82vh] lg:h-[88vh] max-h-[880px] pointer-events-none z-1 will-change-transform flex items-end justify-end select-none"
+        >
+          {/* Intense Monarch Abyssal Violet Backlight Aura behind Jin-Woo */}
+          <div className="absolute -top-10 right-1/4 w-[350px] sm:w-[450px] h-[450px] bg-purple-600/30 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute top-1/3 right-1/3 w-[250px] h-[300px] bg-cyan-500/15 rounded-full blur-[80px] pointer-events-none" />
+
+          {/* Jin-Woo Full Height Standing Cutout */}
+          <img
+            src={jinwooImage}
+            alt="Sung Jin-Woo Shadow Monarch"
+            className="h-full w-auto object-contain object-bottom filter contrast-125 saturate-125 drop-shadow-[0_0_55px_rgba(168,85,247,0.55)] select-none pointer-events-none opacity-65 sm:opacity-80 lg:opacity-90"
+          />
+
+          {/* Bottom Depth Gradient - smoothly blends shadow flames into the obsidian floor */}
+          <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#020005] via-[#020005]/70 to-transparent pointer-events-none" />
+          {/* Left ambient soft vignette */}
+          <div className="absolute inset-y-0 left-0 w-28 bg-gradient-to-r from-[#020005]/60 to-transparent pointer-events-none" />
         </motion.div>
 
         {/* Shadow Monarch Abyssal Violet Nebula */}
