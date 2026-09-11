@@ -12,8 +12,7 @@ import {
   CheckCircle,
   ExternalLink,
   X,
-  ArrowUp,
-  Sparkles
+  ArrowUp
 } from 'lucide-react';
 
 import art1 from '../assets/quests/1.png';
@@ -291,32 +290,37 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
         opacity: questOpacity,
         y: questY,
         pointerEvents: questPointerEvents,
+        background:
+          'linear-gradient(135deg, #000000 0%, #170202 20%, #750000 44%, #c50000 64%, #f42c2c 82%, #ffffff 100%)',
       }}
-      className="absolute inset-0 w-full min-w-full h-full min-h-full z-20 flex flex-col bg-[#070b16] text-white overflow-hidden select-none border-b border-[#00d4ff]/30 shadow-[0_20px_50px_rgba(0,0,0,0.95)]"
+      className="absolute inset-0 w-full min-w-full h-full min-h-full z-20 flex flex-col text-white overflow-hidden select-none border-b-2 border-red-600/70 shadow-[0_25px_60px_rgba(0,0,0,0.95)]"
     >
-      {/* Background Ambient Glow & Subtle Texture */}
+      {/* Background Ambient Glow & Subtle Texture (Black, White & Red Theme) */}
       <div className="absolute inset-0 pointer-events-none">
+        {/* Deep Crimson Blood Flame Aura */}
         <div
-          className="absolute -top-32 left-1/4 w-[75vw] h-[400px]"
+          className="absolute -top-32 left-1/4 w-[75vw] h-[450px]"
           style={{
             background:
-              'radial-gradient(ellipse at center, rgba(0, 212, 255, 0.16) 0%, rgba(181, 55, 242, 0.12) 40%, transparent 70%)',
+              'radial-gradient(ellipse at center, rgba(235, 0, 0, 0.38) 0%, rgba(120, 0, 0, 0.22) 45%, transparent 70%)',
             filter: 'blur(80px)',
           }}
         />
+        {/* Bright White Spectral Astral Flare */}
         <div
-          className="absolute -bottom-24 right-1/4 w-[65vw] h-[350px]"
+          className="absolute -bottom-24 right-1/4 w-[65vw] h-[360px]"
           style={{
             background:
-              'radial-gradient(ellipse at center, rgba(255, 107, 53, 0.14) 0%, rgba(0, 212, 255, 0.08) 45%, transparent 70%)',
+              'radial-gradient(ellipse at center, rgba(255, 255, 255, 0.32) 0%, rgba(255, 90, 90, 0.18) 45%, transparent 70%)',
             filter: 'blur(75px)',
           }}
         />
+        {/* Fine Anime Dot Matrix Pattern */}
         <div
-          className="absolute inset-0 opacity-15"
+          className="absolute inset-0 opacity-20"
           style={{
             backgroundImage:
-              'radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), radial-gradient(rgba(0,212,255,0.1) 1px, transparent 1px)',
+              'radial-gradient(rgba(255,255,255,0.22) 1px, transparent 1px), radial-gradient(rgba(230,0,0,0.22) 1px, transparent 1px)',
             backgroundSize: '40px 40px',
             backgroundPosition: '0 0, 20px 20px',
           }}
@@ -324,22 +328,22 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
       </div>
 
       {/* Top Header & Navigation Bar */}
-      <header className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3 sm:pt-4 pb-2.5 border-b border-zinc-800/80 shrink-0">
+      <header className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3 sm:pt-4 pb-2.5 border-b border-white/15 bg-black/60 backdrop-blur-lg shrink-0">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2.5">
           {/* Section Breadcrumb & Bounty Tag */}
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-naruto inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full border border-[#00d4ff]/40 bg-[#00d4ff]/10 text-[#00d4ff] text-[10px] sm:text-xs font-bold tracking-wider uppercase">
-                <Flame className="w-3.5 h-3.5 text-[#ff0055] animate-pulse" />
+              <span className="font-naruto inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full border border-red-500/50 bg-red-950/60 text-red-300 text-[10px] sm:text-xs font-bold tracking-wider uppercase shadow-md">
+                <Flame className="w-3.5 h-3.5 text-red-500 animate-pulse" />
                 【 03 // 迷宮回廊の試練 • QUEST SANCTUM 】
               </span>
-              <span className="text-[10px] sm:text-xs font-mono text-zinc-400">
+              <span className="text-[10px] sm:text-xs font-mono text-zinc-300">
                 ₹3,40,000+ BOUNTY POOL
               </span>
             </div>
             <h1 className="font-naruto text-xl sm:text-2xl md:text-3xl text-white tracking-wider uppercase drop-shadow-sm mt-0.5">
               DUNGEON QUESTS &{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00d4ff] via-[#b537f2] to-[#ff0055]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff3333] via-[#ffffff] to-[#ff2222]">
                 FESTIVAL MISSIONS
               </span>
             </h1>
@@ -355,7 +359,7 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
                 placeholder="Search raids, tags, boss..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-8 pr-3 py-1.5 rounded-md bg-zinc-900/90 border border-zinc-700/80 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#00d4ff] transition-colors"
+                className="w-full pl-8 pr-3 py-1.5 rounded-md bg-zinc-950/90 border border-zinc-700/80 text-xs text-white placeholder-zinc-400 focus:outline-none focus:border-red-500 transition-colors"
               />
               {searchQuery && (
                 <button
@@ -369,13 +373,13 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
 
             {/* Scroll Progress Bar indicator */}
             <div className="hidden lg:flex flex-col items-start gap-1 w-24">
-              <span className="text-[9px] font-mono text-zinc-400 uppercase tracking-wider">
+              <span className="text-[9px] font-mono text-zinc-300 uppercase tracking-wider">
                 Raid Stream
               </span>
-              <div className="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden border border-zinc-700">
+              <div className="w-full h-1.5 bg-black/80 rounded-full overflow-hidden border border-white/20">
                 <motion.div
                   style={{ width: scrollIndicatorWidth }}
-                  className="h-full bg-gradient-to-r from-[#00d4ff] via-[#b537f2] to-[#ff0055]"
+                  className="h-full bg-gradient-to-r from-[#ffffff] via-[#dc2626] to-[#000000]"
                 />
               </div>
             </div>
@@ -384,9 +388,9 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
             <button
               onClick={scrollToAbout}
               title="Return to About Section"
-              className="font-naruto inline-flex items-center gap-1 px-3 py-1.5 rounded-md border border-zinc-700 bg-zinc-900/80 text-zinc-300 hover:text-white hover:border-[#facc15] hover:bg-zinc-800 transition-all text-xs shrink-0 cursor-pointer shadow-sm"
+              className="font-naruto inline-flex items-center gap-1 px-3 py-1.5 rounded-md border border-white/20 bg-black/80 text-zinc-200 hover:text-white hover:border-red-500 hover:bg-zinc-900 transition-all text-xs shrink-0 cursor-pointer shadow-sm"
             >
-              <ArrowUp className="w-3.5 h-3.5 text-[#facc15]" />
+              <ArrowUp className="w-3.5 h-3.5 text-red-500" />
               <span className="hidden sm:inline">About</span>
             </button>
           </div>
@@ -402,9 +406,10 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
                 onClick={() => setSelectedCategory(cat)}
                 className="font-naruto relative px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider transition-all whitespace-nowrap cursor-pointer shrink-0 border"
                 style={{
-                  backgroundColor: isActive ? '#00d4ff' : 'rgba(24, 24, 27, 0.7)',
-                  color: isActive ? '#050811' : '#a1a1aa',
-                  borderColor: isActive ? '#00d4ff' : 'rgba(63, 63, 70, 0.6)',
+                  backgroundColor: isActive ? '#dc2626' : 'rgba(0, 0, 0, 0.75)',
+                  color: isActive ? '#ffffff' : '#d4d4d8',
+                  borderColor: isActive ? '#f87171' : 'rgba(255, 255, 255, 0.2)',
+                  boxShadow: isActive ? '0 0 15px rgba(220, 38, 38, 0.5)' : 'none',
                 }}
               >
                 {cat}
@@ -423,25 +428,25 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
         {/* ======================================================== */}
         <div className="absolute left-6 sm:left-12 lg:left-20 top-[48%] -translate-y-1/2 max-w-xl z-0 pointer-events-none select-none">
           {/* Subtle Japanese Watermark */}
-          <div className="font-shojumaru absolute -top-16 -left-10 text-8xl sm:text-9xl text-white/[0.03] select-none -z-10 pointer-events-none">
+          <div className="font-shojumaru absolute -top-16 -left-10 text-8xl sm:text-9xl text-white/[0.06] select-none -z-10 pointer-events-none">
             迷宮
           </div>
 
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#00d4ff]/30 bg-[#00d4ff]/10 text-[#00d4ff] text-[10px] sm:text-xs font-mono font-bold tracking-widest uppercase mb-3 backdrop-blur-md">
-            <Sparkles className="w-3.5 h-3.5 text-[#00d4ff] animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-red-500/40 bg-black/60 text-red-400 text-[10px] sm:text-xs font-mono font-bold tracking-widest uppercase mb-3 backdrop-blur-md">
+            <Flame className="w-3.5 h-3.5 text-red-500 animate-pulse" />
             <span>FESTIVAL ARENA PROVING GROUNDS</span>
           </div>
 
-          <h2 className="font-sans font-black text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-[78px] text-white tracking-tighter uppercase leading-[0.88] drop-shadow-[0_15px_35px_rgba(0,0,0,0.9)]">
+          <h2 className="font-sans font-black text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-[78px] text-white tracking-tighter uppercase leading-[0.88] drop-shadow-[0_15px_35px_rgba(0,0,0,0.95)]">
             GREAT RAIDS<br />
             CAN'T HAPPEN<br />
             WITHOUT<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00d4ff] via-[#b537f2] to-[#ff0055]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff3333] via-[#ff8888] to-[#ffffff]">
               HUNTERS.
             </span>
           </h2>
 
-          <p className="mt-4 text-xs sm:text-sm text-zinc-400 font-sans max-w-md leading-relaxed hidden sm:block">
+          <p className="mt-4 text-xs sm:text-sm text-zinc-300 font-sans max-w-md leading-relaxed hidden sm:block drop-shadow-md">
             Step into the proving grounds of TECHFEST 2026. From algorithmic speed-clashes to 24-hour hackathons and combat robotics, choose your mission, assemble your squad, and claim the supreme bounty.
           </p>
         </div>
@@ -480,13 +485,13 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
                     zIndex: 30,
                     transition: { duration: 0.25, ease: 'easeOut' },
                   }}
-                  className={`group relative w-[310px] xs:w-[340px] sm:w-[370px] lg:w-[400px] h-[490px] xs:h-[520px] sm:h-[550px] rounded-2xl border border-white/20 hover:border-[#00d4ff]/80 transition-all duration-300 overflow-hidden flex flex-col justify-between shadow-[0_25px_60px_rgba(0,0,0,0.85),0_0_20px_rgba(0,212,255,0.08)] cursor-pointer select-none shrink-0 ${verticalFloat}`}
+                  className={`group relative w-[310px] xs:w-[340px] sm:w-[370px] lg:w-[400px] h-[490px] xs:h-[520px] sm:h-[550px] rounded-2xl border border-white/20 hover:border-red-500/80 transition-all duration-300 overflow-hidden flex flex-col justify-between shadow-[0_25px_60px_rgba(0,0,0,0.85),0_0_25px_rgba(220,38,38,0.15)] cursor-pointer select-none shrink-0 ${verticalFloat}`}
                   style={{
                     // High-fidelity frosted glass: blurs the giant typography behind it in real-time
                     backdropFilter: 'blur(20px)',
                     WebkitBackdropFilter: 'blur(20px)',
                     background:
-                      'linear-gradient(165deg, rgba(255, 255, 255, 0.12) 0%, rgba(13, 17, 28, 0.78) 35%, rgba(6, 9, 17, 0.92) 100%)',
+                      'linear-gradient(165deg, rgba(255, 255, 255, 0.16) 0%, rgba(20, 5, 5, 0.84) 35%, rgba(0, 0, 0, 0.95) 100%)',
                     // Subtle 3D tilted slab perspective angle from reference screenshots
                     transform: 'perspective(1200px) rotateY(-7deg) rotateX(2.5deg) rotateZ(-0.5deg)',
                     transformStyle: 'preserve-3d',
