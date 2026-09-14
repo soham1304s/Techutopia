@@ -18,14 +18,19 @@ import {
   ArrowRight
 } from 'lucide-react';
 
-import card1Image from './card1.png';
-import back4Image from './back4.png';
-import art1 from '../assets/quests/1.png';
-import art2 from '../assets/quests/2.png';
-import art3 from '../assets/quests/3.png';
-import art4 from '../assets/quests/4.png';
-import art5 from '../assets/quests/5.png';
-import art6 from '../assets/quests/6.png';
+import card1Image from './card1.webp';
+import card2Image from './card2.webp';
+import card3Image from './card3.webp';
+import card4Image from './card4.webp';
+import card5Image from './card5.webp';
+import card6Image from './card6.webp';
+import back4Image from './back4.webp';
+import art1 from '../assets/quests/1.webp';
+import art2 from '../assets/quests/2.webp';
+import art3 from '../assets/quests/3.webp';
+import art4 from '../assets/quests/4.webp';
+import art5 from '../assets/quests/5.webp';
+import art6 from '../assets/quests/6.webp';
 
 export interface QuestItem {
   id: number;
@@ -362,6 +367,8 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
           <img
             src={back4Image}
             alt="Solo Leveling Shadow Monarch Gate"
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover object-center opacity-65 filter contrast-125 saturate-125 select-none pointer-events-none"
           />
           {/* Vertical and Radial Depth Gradients for perfect text readability and abyssal mood */}
@@ -545,7 +552,7 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
         {/* Slides horizontally as the user scrolls                  */}
         {/* ======================================================== */}
         <motion.div
-          style={{ x: trackX }}
+          style={{ x: trackX, willChange: 'transform' }}
           className="relative z-10 flex items-center gap-6 sm:gap-8 lg:gap-10 py-6 sm:py-8 pl-6 pr-24"
         >
           {filteredQuests.length === 0 ? (
@@ -564,8 +571,21 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
               const isEven = index % 2 === 0;
               // Subtle alternating vertical offset for mobile, more pronounced on desktop
               const verticalFloat = isEven ? '-translate-y-2 sm:-translate-y-6' : 'translate-y-2 sm:translate-y-6';
-              // Card 1 specifically uses the epic Sung Jin-Woo card1.png from components
-              const backImage = quest.id === 1 ? card1Image : quest.image;
+              // Collectible card artworks for all 6 quest cards
+              const backImage =
+                quest.id === 1
+                  ? card1Image
+                  : quest.id === 2
+                  ? card2Image
+                  : quest.id === 3
+                  ? card3Image
+                  : quest.id === 4
+                  ? card4Image
+                  : quest.id === 5
+                  ? card5Image
+                  : quest.id === 6
+                  ? card6Image
+                  : quest.image;
 
               return (
                 <div
@@ -577,6 +597,7 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
                       ? 'perspective(1400px) rotateY(0deg) rotateX(0deg)'
                       : 'perspective(1400px) rotateY(-6deg) rotateX(2deg) rotateZ(-0.5deg)',
                     transition: 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)',
+                    willChange: 'transform',
                   }}
                 >
                   <motion.div
@@ -611,8 +632,6 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
                         backfaceVisibility: 'hidden',
                         WebkitBackfaceVisibility: 'hidden',
                         transform: 'rotateY(0deg) translateZ(1px)',
-                        backdropFilter: 'blur(24px)',
-                        WebkitBackdropFilter: 'blur(24px)',
                         background:
                           'radial-gradient(ellipse at 25% 15%, rgba(30, 58, 138, 0.45) 0%, rgba(15, 6, 32, 0.96) 50%, #05020a 100%)',
                       }}
@@ -703,6 +722,8 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
                         <img
                           src={quest.image}
                           alt={quest.title}
+                          loading="lazy"
+                          decoding="async"
                           className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 filter saturate-125 contrast-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/35" />
@@ -893,6 +914,8 @@ export const QuestSection: React.FC<QuestSectionProps> = ({ scrollYProgress }) =
                       <img
                         src={backImage}
                         alt={`${quest.title} Awakened Card`}
+                        loading="lazy"
+                        decoding="async"
                         className="absolute inset-0 w-full h-full object-cover object-center filter saturate-110 contrast-105"
                       />
 

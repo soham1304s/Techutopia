@@ -15,30 +15,33 @@ html::-webkit-scrollbar, body::-webkit-scrollbar, *::-webkit-scrollbar {
   -ms-overflow-style: none;
 }
 
-/* Production-grade Ambient Glow & Dim Breathing Animations */
+/* Production-grade Ambient Glow & Dim Breathing Animations (GPU Compositor Accelerated) */
 @keyframes bgGlowBreathe {
   0% {
-    filter: brightness(0.92) contrast(1.02) saturate(0.98);
+    opacity: 0.85;
+    transform: scale(1) translate3d(0, 0, 0);
   }
   50% {
-    filter: brightness(1.18) contrast(1.08) saturate(1.2);
+    opacity: 1;
+    transform: scale(1.015) translate3d(0, 0, 0);
   }
   100% {
-    filter: brightness(0.92) contrast(1.02) saturate(0.98);
+    opacity: 0.85;
+    transform: scale(1) translate3d(0, 0, 0);
   }
 }
 
 @keyframes glowPulsePrimary {
   0% {
-    transform: translate(-50%, -50%) scale(0.88);
+    transform: translate(-50%, -50%) scale(0.88) translate3d(0, 0, 0);
     opacity: 0.38;
   }
   50% {
-    transform: translate(-50%, -50%) scale(1.15);
+    transform: translate(-50%, -50%) scale(1.15) translate3d(0, 0, 0);
     opacity: 0.88;
   }
   100% {
-    transform: translate(-50%, -50%) scale(0.88);
+    transform: translate(-50%, -50%) scale(0.88) translate3d(0, 0, 0);
     opacity: 0.38;
   }
 }
@@ -60,27 +63,33 @@ html::-webkit-scrollbar, body::-webkit-scrollbar, *::-webkit-scrollbar {
 
 @keyframes glowPulseAccent {
   0% {
-    transform: translate(-50%, 0) scale(0.92);
+    transform: translate(-50%, 0) scale(0.92) translate3d(0, 0, 0);
     opacity: 0.2;
   }
   50% {
-    transform: translate(-50%, 0) scale(1.12);
+    transform: translate(-50%, 0) scale(1.12) translate3d(0, 0, 0);
     opacity: 0.7;
   }
   100% {
-    transform: translate(-50%, 0) scale(0.92);
+    transform: translate(-50%, 0) scale(0.92) translate3d(0, 0, 0);
     opacity: 0.2;
   }
 }
 
 .animate-bg-breathe {
   animation: bgGlowBreathe 6.5s ease-in-out infinite;
-  will-change: filter;
+  will-change: opacity, transform;
 }
 
 .animate-glow-primary {
   animation: glowPulsePrimary 5s ease-in-out infinite;
   will-change: transform, opacity;
+}
+
+@media (max-width: 640px) {
+  .mobile-blur-light {
+    filter: blur(36px) !important;
+  }
 }
 
 .animate-glow-secondary {
@@ -102,3 +111,118 @@ html::-webkit-scrollbar, body::-webkit-scrollbar, *::-webkit-scrollbar {
     opacity: 0.55 !important;
   }
 }
+
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 8s linear infinite;
+}
+
+@keyframes spinReverseSlow {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-spin-reverse-slow {
+  animation: spinReverseSlow 14s linear infinite;
+}
+
+@keyframes radarSweep {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-radar-sweep {
+  animation: radarSweep 3s linear infinite;
+}
+
+@keyframes gateTremor {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-2px, 1.5px);
+  }
+  40% {
+    transform: translate(2px, -1.5px);
+  }
+  60% {
+    transform: translate(-1.5px, -1px);
+  }
+  80% {
+    transform: translate(1.5px, 1px);
+  }
+}
+
+.animate-gate-tremor {
+  animation: gateTremor 0.35s ease-in-out infinite;
+}
+
+@keyframes eyePulseGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px #00d4ff) drop-shadow(0 0 20px #00d4ff);
+    opacity: 0.9;
+  }
+  50% {
+    filter: drop-shadow(0 0 18px #38bdf8) drop-shadow(0 0 35px #a855f7);
+    opacity: 1;
+  }
+}
+
+.animate-eye-glow {
+  animation: eyePulseGlow 1.4s ease-in-out infinite;
+}
+
+@keyframes manaEmber {
+  0% {
+    transform: translateY(0) scale(0.8) rotate(0deg);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.8;
+  }
+  75% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-120px) scale(1.2) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+.animate-mana-ember {
+  animation: manaEmber 2.8s ease-out infinite;
+}
+
+@keyframes shatterTremor {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  10% { transform: translate3d(-12px, 9px, 0) scale(1.018); }
+  22% { transform: translate3d(10px, -8px, 0) scale(1.012); }
+  36% { transform: translate3d(-8px, 6px, 0) scale(1.007); }
+  50% { transform: translate3d(6px, -4px, 0) scale(1.004); }
+  68% { transform: translate3d(-3px, 2px, 0) scale(1.001); }
+  84% { transform: translate3d(1px, -1px, 0) scale(1); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+.animate-shatter-tremor {
+  animation: shatterTremor 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform;
+}
+
+

@@ -13,9 +13,9 @@ import {
   ShieldCheck,
   Box,
 } from 'lucide-react';
-import figma5Img from './figma5.png';
-import figma6Img from './figma6.png';
-import figma7Img from './figma7.png';
+import figma5Img from './figma5.webp';
+import figma6Img from './figma6.webp';
+import figma7Img from './figma7.webp';
 
 // Iconic Uzumaki Clan Spiral Crest
 const UzumakiSpiral: React.FC<{ className?: string }> = ({ className = "w-4 h-4" }) => (
@@ -392,6 +392,8 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ scrollYProgress }) =
                     <img
                       src={figma5Img}
                       alt="Naruto Uzumaki Six Paths Sage Mode Figurine"
+                      loading="lazy"
+                      decoding="async"
                       className="h-[34vh] xs:h-[38vh] sm:h-[42vh] md:h-[44vh] lg:h-[48vh] max-h-[330px] xs:max-h-[390px] sm:max-h-[440px] md:max-h-[480px] lg:max-h-[540px] xl:max-h-[580px] w-auto object-contain drop-shadow-[0_22px_45px_rgba(230,69,0,0.6)] pointer-events-none"
                     />
                   </motion.div>
@@ -526,6 +528,8 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ scrollYProgress }) =
                     <img
                       src={figma6Img}
                       alt="Naruto Uzumaki Sage Mode Rasenshuriken Figurine"
+                      loading="lazy"
+                      decoding="async"
                       className="h-[34vh] xs:h-[38vh] sm:h-[42vh] md:h-[44vh] lg:h-[48vh] max-h-[330px] xs:max-h-[390px] sm:max-h-[440px] md:max-h-[480px] lg:max-h-[540px] xl:max-h-[580px] w-auto object-contain drop-shadow-[0_22px_45px_rgba(56,189,248,0.55)] pointer-events-none"
                     />
                   </motion.div>
@@ -669,6 +673,8 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ scrollYProgress }) =
                     <img
                       src={figma7Img}
                       alt="Naruto Uzumaki Kurama Chakra Rasenshuriken Figurine"
+                      loading="lazy"
+                      decoding="async"
                       className="h-[34vh] xs:h-[38vh] sm:h-[42vh] md:h-[44vh] lg:h-[48vh] max-h-[330px] xs:max-h-[390px] sm:max-h-[440px] md:max-h-[480px] lg:max-h-[540px] xl:max-h-[580px] w-auto object-contain drop-shadow-[0_22px_45px_rgba(250,204,21,0.6)] pointer-events-none"
                     />
                   </motion.div>

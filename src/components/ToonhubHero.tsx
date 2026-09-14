@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import sukunaImg from './sukuna.png';
-import figma2Img from './figma2.png';
-import figma3Img from './figma3.png';
-import figma4Img from './figma4.png';
+import sukunaImg from './sukuna.webp';
+import figma2Img from './figma2.webp';
+import figma3Img from './figma3.webp';
+import figma4Img from './figma4.webp';
 
 interface GlowConfig {
   primary: string;
@@ -63,7 +64,11 @@ const IMAGES: FigurineImage[] = [
 
 type Role = 'center' | 'left' | 'right' | 'back';
 
-export const ToonhubHero: React.FC = () => {
+export interface ToonhubHeroProps {
+  isOpen?: boolean;
+}
+
+export const ToonhubHero: React.FC<ToonhubHeroProps> = ({ isOpen = true }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const lastNavTimeRef = useRef(0);
@@ -88,18 +93,29 @@ export const ToonhubHero: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Unstoppable auto-slide: always running every 3 seconds, never pauses
+  // Auto-slide: runs every 3 seconds when Hero is open and visible
   const resetAutoSlide = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current);
+    if (!isOpen) return;
+    if (typeof document !== 'undefined' && document.hidden) return;
     timerRef.current = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % 4);
     }, 3000);
-  }, []);
+  }, [isOpen]);
 
   useEffect(() => {
     resetAutoSlide();
+    const handleVisibility = () => {
+      if (document.hidden) {
+        if (timerRef.current) clearInterval(timerRef.current);
+      } else {
+        resetAutoSlide();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
+      document.removeEventListener('visibilitychange', handleVisibility);
     };
   }, [resetAutoSlide]);
 
@@ -240,7 +256,7 @@ export const ToonhubHero: React.FC = () => {
             >
               {/* Primary central ambient glow (breathes and expands behind the figurine) */}
               <div
-                className={`absolute left-1/2 top-[48%] -translate-x-1/2 -translate-y-1/2 w-[85vw] sm:w-[58vw] max-w-[850px] aspect-square rounded-full pointer-events-none ${
+                className={`absolute left-1/2 top-[48%] -translate-x-1/2 -translate-y-1/2 w-[85vw] sm:w-[58vw] max-w-[850px] aspect-square rounded-full pointer-events-none mobile-blur-light ${
                   isActive ? 'animate-glow-primary' : ''
                 }`}
                 style={{
@@ -252,7 +268,7 @@ export const ToonhubHero: React.FC = () => {
 
               {/* Secondary corner accent glow (counter-rhythm organic pulse) */}
               <div
-                className={`absolute -right-[10%] -top-[5%] sm:right-[5%] sm:top-[8%] w-[55vw] max-w-[620px] aspect-square rounded-full pointer-events-none ${
+                className={`absolute -right-[10%] -top-[5%] sm:right-[5%] sm:top-[8%] w-[55vw] max-w-[620px] aspect-square rounded-full pointer-events-none mobile-blur-light ${
                   isActive ? 'animate-glow-secondary' : ''
                 }`}
                 style={{
@@ -264,7 +280,7 @@ export const ToonhubHero: React.FC = () => {
 
               {/* Core focal accent aura for depth & luminous luster */}
               <div
-                className={`absolute left-1/2 bottom-[12%] -translate-x-1/2 w-[70vw] sm:w-[42vw] max-w-[580px] h-[320px] rounded-full pointer-events-none ${
+                className={`absolute left-1/2 bottom-[12%] -translate-x-1/2 w-[70vw] sm:w-[42vw] max-w-[580px] h-[320px] rounded-full pointer-events-none mobile-blur-light ${
                   isActive ? 'animate-glow-accent' : ''
                 }`}
                 style={{
@@ -289,7 +305,7 @@ export const ToonhubHero: React.FC = () => {
           }}
         />
 
-        {/* 2. Giant ghost text "TECH FEST" (absolute inset-x-0 flex items-center justify-center pointer-events-none select-none, zIndex 2, top: 18%) */}
+        {/* 2. Giant ghost text "TECH FEST" - Production-level slow rise from bottom */}
         <div
           className="absolute inset-x-0 flex items-center justify-center pointer-events-none select-none uppercase"
           style={{
@@ -299,13 +315,78 @@ export const ToonhubHero: React.FC = () => {
             fontSize: 'clamp(70px, 24vw, 340px)',
             fontWeight: 900,
             color: '#ffffff',
-            opacity: 1,
             lineHeight: 1,
             letterSpacing: '-0.02em',
             whiteSpace: 'nowrap',
           }}
         >
-          TECH FEST
+          <div className="flex items-center justify-center gap-[0.16em]">
+            <motion.span
+              initial={{
+                y: isMobile ? '45vh' : '55vh',
+                opacity: 0,
+                scale: 0.9,
+                filter: 'blur(16px)',
+              }}
+              animate={
+                isOpen
+                  ? {
+                      y: '0vh',
+                      opacity: 1,
+                      scale: 1,
+                      filter: 'blur(0px)',
+                    }
+                  : {
+                      y: isMobile ? '45vh' : '55vh',
+                      opacity: 0,
+                      scale: 0.9,
+                      filter: 'blur(16px)',
+                    }
+              }
+              transition={{
+                duration: 1.6,
+                delay: 0.35,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="inline-block tracking-tight drop-shadow-[0_20px_45px_rgba(0,0,0,0.85)]"
+              style={{ willChange: 'transform, opacity, filter' }}
+            >
+              TECH
+            </motion.span>
+
+            <motion.span
+              initial={{
+                y: isMobile ? '50vh' : '60vh',
+                opacity: 0,
+                scale: 0.9,
+                filter: 'blur(16px)',
+              }}
+              animate={
+                isOpen
+                  ? {
+                      y: '0vh',
+                      opacity: 1,
+                      scale: 1,
+                      filter: 'blur(0px)',
+                    }
+                  : {
+                      y: isMobile ? '50vh' : '60vh',
+                      opacity: 0,
+                      scale: 0.9,
+                      filter: 'blur(16px)',
+                    }
+              }
+              transition={{
+                duration: 1.65,
+                delay: 0.48,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="inline-block tracking-tight drop-shadow-[0_20px_45px_rgba(0,0,0,0.85)]"
+              style={{ willChange: 'transform, opacity, filter' }}
+            >
+              FEST
+            </motion.span>
+          </div>
         </div>
 
 
@@ -337,6 +418,8 @@ export const ToonhubHero: React.FC = () => {
                   src={item.src}
                   alt={`Toonhub figurine ${idx + 1}`}
                   draggable={false}
+                  loading={role === 'center' ? 'eager' : 'lazy'}
+                  decoding="async"
                   className="w-full h-full object-contain object-bottom pointer-events-none select-none"
                   style={{
                     width: '100%',
@@ -351,7 +434,10 @@ export const ToonhubHero: React.FC = () => {
         </div>
 
         {/* 5. Bottom-left text + nav buttons (absolute bottom-6 left-4 sm:bottom-20 sm:left-24, zIndex 60, maxWidth: 320px) */}
-        <div
+        <motion.div
+          initial={{ opacity: 0, y: 35 }}
+          animate={isOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: 35 }}
+          transition={{ duration: 0.9, delay: 0.65, ease: [0.22, 1, 0.36, 1] }}
           className="absolute bottom-6 left-4 sm:bottom-20 sm:left-24 flex flex-col justify-end"
           style={{
             zIndex: 60,
@@ -406,7 +492,7 @@ export const ToonhubHero: React.FC = () => {
               <ArrowRight size={26} strokeWidth={2.25} />
             </button>
           </div>
-        </div>
+        </motion.div>
 
         {/* Bottom subtle transition overlay toward About */}
         <div
@@ -419,7 +505,10 @@ export const ToonhubHero: React.FC = () => {
         />
 
         {/* 6. Bottom-right link "DISCOVER IT" (absolute bottom-6 right-4 sm:bottom-20 sm:right-10, zIndex 60) */}
-        <a
+        <motion.a
+          initial={{ opacity: 0, y: 35 }}
+          animate={isOpen ? { opacity: 0.95, y: 0 } : { opacity: 0, y: 35 }}
+          transition={{ duration: 0.9, delay: 0.75, ease: [0.22, 1, 0.36, 1] }}
           href="#about"
           onClick={(e) => {
             e.preventDefault();
@@ -453,7 +542,7 @@ export const ToonhubHero: React.FC = () => {
             className="w-5 h-5 sm:w-8 sm:h-8 transition-transform duration-200 group-hover:translate-x-1"
             strokeWidth={2.25}
           />
-        </a>
+        </motion.a>
       </div>
     </div>
   );
